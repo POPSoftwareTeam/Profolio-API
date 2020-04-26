@@ -10,8 +10,8 @@
     "start": "node ./dist/.",
     "dev": "ts-node-dev src/index.ts",
     "test": "jest",
-    "deploy":"pm2 start ./dist/.",
-    "stop":"pm2 stop all"
+    "deploy": "pm2 start ./dist/.",
+    "stop": "pm2 stop all"
   },
   "repository": {
     "type": "git",

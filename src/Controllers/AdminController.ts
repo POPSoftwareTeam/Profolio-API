@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { User } from "../Models/UserModel";
-import { IAuthenticationService } from "../Services/IAuthenticationService";
-import { IUserService } from "../Services/IUserService";
+import { IAuthenticationService } from "../Services/Authentication/IAuthenticationService";
+import { IUserService } from "../Services/Users/IUserService";
 
 export class AdminController {
     private iuserservice: IUserService;

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { User } from "../Models/UserModel";
+import { User } from "../../Models/UserModel";
 
 export interface IAuthenticationService {
     // validates a username and password and returns a token to the calling service

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { User } from "../Models/UserModel";
+import { User } from "../../Models/UserModel";
 import { IAuthenticationService } from "./IAuthenticationService";
-import { IUserService } from "./IUserService";
+import { IUserService } from "../Users/IUserService";
 const jwt = require("jsonwebtoken");
 
 export class JWTAuthenticationService implements IAuthenticationService {

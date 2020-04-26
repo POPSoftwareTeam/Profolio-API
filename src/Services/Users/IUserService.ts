@@ -1,4 +1,4 @@
-import { User } from "../Models/UserModel";
+import { User } from "../../Models/UserModel";
 
 export interface IUserService {
     ValidateUser(user: User): Promise<User|null>;

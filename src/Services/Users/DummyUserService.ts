@@ -1,5 +1,5 @@
-import { User } from "../Models/UserModel";
-import { IUserRepository } from "../Repositories/IUserRepository";
+import { User } from "../../Models/UserModel";
+import { IUserRepository } from "../../Repositories/IUserRepository";
 import {IUserService} from "./IUserService";
 
 export class DummyUserService implements IUserService {

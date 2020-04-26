@@ -10,14 +10,26 @@ export class UserController {
         this.iuserservice = iuserservice;
         this.iauthenticationservice = iauthenticationservice;
     }
-    public async PostRegister(req: Request, res: Response): Promise<void> {
-        const user = new User(null, req.body.User.email, req.body.User.password, req.body.User.authorization);
-        if (await this.iuserservice.CreateUser(user)) {
-            res.write(JSON.stringify({Status: "success", Message: "The user was successfuly added to the database"}));
+    public async PostClientRegister(req: Request, res: Response): Promise<void> {
+        const user = new User(null, req.body.User.email, req.body.User.password, "unverified");
+        if (await this.iuserservice.CreateUser(user,"client")) {
+            res.write(JSON.stringify({Status: "success", Message: "The client was successfuly added to the database"}));
             res.end();
             return;
         } else {
-            res.write(JSON.stringify({Status: "faliure", Message: "Failed to add the user to the database"}));
+            res.write(JSON.stringify({Status: "faliure", Message: "Failed to add the client to the database"}));
+            res.end();
+            return;
+        }
+    }
+    public async PostPhotographerRegister(req: Request, res: Response): Promise<void> {
+        const user = new User(null, req.body.User.email, req.body.User.password, "unverified");
+        if (await this.iuserservice.CreateUser(user,"photographer")) {
+            res.write(JSON.stringify({Status: "success", Message: "The photographer was successfuly added to the database"}));
+            res.end();
+            return;
+        } else {
+            res.write(JSON.stringify({Status: "faliure", Message: "Failed to add the photographer to the database"}));
             res.end();
             return;
         }
@@ -50,6 +62,32 @@ export class UserController {
             res.end();
         }
 
+    }
+
+    public async VerifyClientEmail(req:Request,res:Response): Promise<void>{
+        const guid = req.params.guid;
+        if (await this.iuserservice.VerifyClientEmail(guid)) {
+            res.write(JSON.stringify({Status: "success", Message: "The client email was verified"}));
+            res.end();
+            return;
+        } else {
+            res.write(JSON.stringify({Status: "faliure", Message: "The client email was not verified"}));
+            res.end();
+            return;
+        }
+    }
+
+    public async VerifyPhotographerEmail(req:Request,res:Response): Promise<void>{
+        const guid = req.params.guid;
+        if (await this.iuserservice.VerifyPhotographerEmail(guid)) {
+            res.write(JSON.stringify({Status: "success", Message: "The photographer email was verified"}));
+            res.end();
+            return;
+        } else {
+            res.write(JSON.stringify({Status: "faliure", Message: "The photographer email was not verified"}));
+            res.end();
+            return;
+        }
     }
 
 }

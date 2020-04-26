@@ -6,6 +6,12 @@ import { promises } from "fs";
 export class DummyUserService implements IUserService {
     constructor(iuserrepository: IUserRepository) {
     }
+    VerifyClientEmail(guid: string): Promise<boolean> {
+        throw new Error("Method not implemented.");
+    }
+    VerifyPhotographerEmail(guid: string): Promise<boolean> {
+        throw new Error("Method not implemented.");
+    }
     EmailVerification(code: string): Promise<boolean> {
         if(code == "12345"){
             return Promise.resolve(true);

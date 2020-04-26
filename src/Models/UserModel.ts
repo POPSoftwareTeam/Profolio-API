@@ -1,11 +1,12 @@
 const bcrypt = require("bcryptjs");
+import { v1 as uuidv1 } from 'uuid';
 
 export class User {
     public readonly id: number|null;
     public readonly email: string;
     public readonly password: string;
-    public readonly authorization: "none"|"user"|"admin";
-    public constructor(id: number|null, email: string, password: string, authorization: "none"|"user"|"admin") {
+    public readonly authorization: "unverified"|"client"|"photographer"|"admin";
+    public constructor(id: number|null, email: string, password: string, authorization: "unverified"|"client"|"photographer"|"admin") {
         this.id = id;
         this.email = email;
         this.password = password;

@@ -2,6 +2,7 @@ import { User } from "../../Models/UserModel";
 import { IUserRepository } from "../../Repositories/IUserRepository";
 import {IUserService} from "./IUserService";
 import { IMailerService } from "../Email/IMailerService";
+import { v1 as uuidv1 } from 'uuid';
 
 export class UserService implements IUserService {
     iuserrepository: IUserRepository;
@@ -10,8 +11,21 @@ export class UserService implements IUserService {
         this.iuserrepository = iuserrepository;
         this.imailservice = imailservice;
     }
-    public async EmailVerification(code: string): Promise<boolean> {
-        return Promise.resolve(true);
+    public async VerifyClientEmail(guid: string): Promise<boolean> {
+        try{
+            this.iuserrepository.VerifyEmail(guid,"client");
+            return true;
+        }catch(e){
+            return false
+        }
+    }
+    public async VerifyPhotographerEmail(guid: string): Promise<boolean> {
+        try{
+            this.iuserrepository.VerifyEmail(guid,"photographer");
+            return true;
+        }catch(e){
+            return false
+        }
     }
     public async ValidateUser(user: User): Promise<User|null> {
         const DBUser: User = await this.iuserrepository.GetExsistingUser(user);
@@ -31,15 +45,18 @@ export class UserService implements IUserService {
         }
         return false;
     }
-    public async CreateUser(user: User): Promise<boolean> {
+    public async CreateUser(user: User,level: string): Promise<boolean> {
         const sercureuser = user.HashPassword();
-        const result: boolean =  await this.iuserrepository.AddNewUser(sercureuser);
-        if (result) {
-            if(await this.imailservice.SendRegistrationEmail(user.email)){
-                return true;
-            }else{
-                return false;
-            }
+        const guid = uuidv1()
+        const result: boolean =  await this.iuserrepository.AddNewUser(sercureuser,guid);
+        let emailsent = false
+        if(level == "client"){
+            emailsent = await this.imailservice.SendClientRegistrationEmail(user.email,guid)
+        }else{
+            emailsent = await this.imailservice.SendPhotographerRegistrationEmail(user.email,guid)
+        }
+        if (result && emailsent) {
+            return true;
         } else {
             return false;
         }

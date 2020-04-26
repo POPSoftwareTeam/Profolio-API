@@ -34,9 +34,12 @@ app.use(bodyParser.json({limit: "50mb", type: "application/json"}));
 app.use(cors());
 
 app.get("/", (req, res) => usercontroller.GetRoot(req, res));
-app.post("/Register", (req, res) => usercontroller.PostRegister(req, res));
+app.post("/Register/Client", (req, res) => usercontroller.PostClientRegister(req, res));
+app.post("/Register/Photographer", (req, res) => usercontroller.PostPhotographerRegister(req, res));
 app.post("/Login", (req, res) => IAuthenticationService.AuthenticateUser(req, res));
 app.post("/DeleteAccount", (req, res) => usercontroller.PostDeleteUser(req, res));
+app.get("/Verify/ClientEmail/:guid",(req,res)=>usercontroller.VerifyClientEmail(req,res));
+app.get("/Verify/PhotographerEmail/:guid",(req,res)=>usercontroller.VerifyPhotographerEmail(req,res));
 app.listen(80, () =>
   console.log("Example app listening on port 80!"),
 );

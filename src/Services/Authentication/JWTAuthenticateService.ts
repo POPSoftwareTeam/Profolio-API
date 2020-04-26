@@ -11,12 +11,16 @@ export class JWTAuthenticationService implements IAuthenticationService {
     }
 
     public async AuthenticateUser(req: Request, res: Response): Promise<void> {
-        const user  = new User(null, req.body.User.email, req.body.User.password, "none");
+        const user  = new User(null, req.body.User.email, req.body.User.password, "unverified");
         const DBUser = await this.iuserservice.ValidateUser(user);
-        if (await this.iuserservice.ValidateUser(user)) {
+        if (DBUser && DBUser.authorization != "unverified") {
             const tokenUser = {email: user.email, authorization: DBUser.authorization};
             const accessToken = jwt.sign(tokenUser, process.env.ACCESS_TOKEN,{expiresIn: "30m"});
             res.json({Status: "success", accessToken});
+            res.end();
+            return;
+        }else{
+            res.json({Status: "failure",Message:"Email not verified or user does not exist"});
             res.end();
             return;
         }

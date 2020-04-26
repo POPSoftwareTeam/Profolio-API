@@ -1,3 +1,4 @@
 export interface IMailerService{
-    SendRegistrationEmail(email:string):Promise<boolean>;
+    SendClientRegistrationEmail(email:string, guid:string):Promise<boolean>;
+    SendPhotographerRegistrationEmail(email:string, guid:string):Promise<boolean>;
 }

@@ -1,4 +1,5 @@
-POST http://localhost:80/Register
+###Register a client
+POST http://localhost:80/Register/Client
 Content-Type: application/json
 
 {	
@@ -8,11 +9,21 @@ Content-Type: application/json
 		"authorization":"user"
 	}
 }
+###Register a photographer
+POST http://localhost:80/Register/Photographer
+Content-Type: application/json
 
+{	
+    "User":{
+		"email":"email@gmail.com",
+		"password":"kyler",
+		"authorization":"user"
+	}
+}
 ###Delets a user if the token used is an admin token, or if the username in the token matches the username being deleted ie deleteing your own account
 
 POST http://localhost:80/DeleteAccount
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkNoYW5jZXRoZWhhY2tlcnYyQGdtYWlsLmNvbSIsImF1dGhvcml6YXRpb24iOiJ1c2VyIiwiaWF0IjoxNTg3ODY5OTczLCJleHAiOjE1ODc4NzE3NzN9.hKRl6BZb8TxP_kVOpiPp6jtxR0AduhIP0vB55i7x7oc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imt5bGVyLmRheWJlbGw5NkBnbWFpbC5jb20iLCJhdXRob3JpemF0aW9uIjoidXNlciIsImlhdCI6MTU4NzkyMzY5MCwiZXhwIjoxNTg3OTI1NDkwfQ.O0rIt7ufYsPISGSRF9T52MuTL8wxfl4hP4ZlF3wirpk
 Content-Type: application/json
 
 {	
@@ -37,3 +48,9 @@ Content-Type: application/json
 
 GET http://localhost:80/
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imt5bGVyLmRheWJlbGwyQGdtYWlsLmNvbSIsImF1dGhvcml6YXRpb24iOiJ1c2VyIiwiaWF0IjoxNTg3ODY2ODA5LCJleHAiOjE1ODc4Njg2MDl9.Ylu0jQfOb2yBGW4mjvZZ52dM4vVVCz2RHntM_tww1Bs
+
+### This is to verify a client email
+GET http://localhost:80/verify/clientemail/guid
+
+### This is to verify a photographer email
+GET http://localhost:80/verify/photographeremail/guid

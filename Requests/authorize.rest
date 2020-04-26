@@ -12,12 +12,12 @@ Content-Type: application/json
 ###Delets a user if the token used is an admin token, or if the username in the token matches the username being deleted ie deleteing your own account
 
 POST http://localhost:80/DeleteAccount
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imt5bGVyLmRheWJlbGxAZ21haWwuY29tIiwicGFzc3dvcmQiOiJreWxlciIsImF1dGhvcml6YXRpb24iOiJhZG1pbiIsImlhdCI6MTU4NjI3MTcxNn0.aqxX5uF-zR4z4VEHDJ5pzP80l-xvXo1lnh4H9nEy-fw
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imt5bGVyLmRheWJlbGwyQGdtYWlsLmNvbSIsImF1dGhvcml6YXRpb24iOiJ1c2VyIiwiaWF0IjoxNTg3ODY2ODA5LCJleHAiOjE1ODc4Njg2MDl9.Ylu0jQfOb2yBGW4mjvZZ52dM4vVVCz2RHntM_tww1Bs
 Content-Type: application/json
 
 {	
     "User":{
-		"email":"kyler.daybell@gmail.com"
+		"email":"kyler.daybell2@gmail.com"
 	}
 }
 
@@ -28,7 +28,7 @@ Content-Type: application/json
 
 {
     "User":{
-        "email":"kyler.daybell@gmail.com",
+        "email":"kyler.daybell2@gmail.com",
         "password":"kyler"
     }
 }
@@ -36,4 +36,4 @@ Content-Type: application/json
 ### this root route validates that a token is correct, for dev purposes only. 
 
 GET http://localhost:80/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imt5bGVyLmRheWJlbGxAZ21haWwuY29tIiwiYXV0aG9yaXphdGlvbiI6InVzZXIiLCJpYXQiOjE1ODc2NTg3OTAsImV4cCI6MTU4NzY1ODk3MH0.k2t92YObI15THhwUeWgbRIWDDs3BqhDn8CWjPNNz83M
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imt5bGVyLmRheWJlbGwyQGdtYWlsLmNvbSIsImF1dGhvcml6YXRpb24iOiJ1c2VyIiwiaWF0IjoxNTg3ODY2ODA5LCJleHAiOjE1ODc4Njg2MDl9.Ylu0jQfOb2yBGW4mjvZZ52dM4vVVCz2RHntM_tww1Bs

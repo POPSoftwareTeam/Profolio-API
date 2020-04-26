@@ -3,6 +3,9 @@ import { IUserRepository } from "./IUserRepository";
 const mysql2 = require("mysql2/promise");
 
 export class MySqlUserRepository implements IUserRepository {
+    UpdateUserLevel(user: User): Promise<boolean> {
+        throw new Error("Method not implemented.");
+    }
     public async getConnection() {
         const con = await mysql2.createConnection({
             host: process.env.DB_HOST,
@@ -14,6 +17,7 @@ export class MySqlUserRepository implements IUserRepository {
         return con;
     }
     public async AddNewUser(user: User): Promise<any> {
+        console.log("in the user add")
         if (user.email != "" && user.password != "") {
             const con = await this.getConnection();
             try {

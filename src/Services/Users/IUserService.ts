@@ -5,4 +5,5 @@ export interface IUserService {
     RemoveUser(user: User): Promise<boolean>;
     CreateUser(user: User): Promise<boolean>;
     GetUserByEmail(user: User): Promise<User>;
+    EmailVerification(code:string):Promise<boolean>;
 }

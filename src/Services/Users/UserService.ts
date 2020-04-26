@@ -7,6 +7,9 @@ export class UserService implements IUserService {
     constructor(iuserrepository: IUserRepository) {
         this.iuserrepository = iuserrepository;
     }
+    EmailVerification(code: string): Promise<boolean> {
+        return Promise.resolve(true);
+    }
     public async ValidateUser(user: User): Promise<User|null> {
         const DBUser: User = await this.iuserrepository.GetExsistingUser(user);
         if (DBUser.email !== "void" && DBUser.ValidatePassword(user.password)) {

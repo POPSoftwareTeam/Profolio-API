@@ -1,0 +1,39 @@
+POST http://localhost:80/Register
+Content-Type: application/json
+
+{	
+    "User":{
+		"email":"kyler.daybell@gmail.com",
+		"password":"kyler",
+		"authorization":"user"
+	}
+}
+
+###Delets a user if the token used is an admin token, or if the username in the token matches the username being deleted ie deleteing your own account
+
+POST http://localhost:80/DeleteAccount
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imt5bGVyLmRheWJlbGxAZ21haWwuY29tIiwicGFzc3dvcmQiOiJreWxlciIsImF1dGhvcml6YXRpb24iOiJhZG1pbiIsImlhdCI6MTU4NjI3MTcxNn0.aqxX5uF-zR4z4VEHDJ5pzP80l-xvXo1lnh4H9nEy-fw
+Content-Type: application/json
+
+{	
+    "User":{
+		"email":"kyler.daybell@gmail.com"
+	}
+}
+
+### verifys that a user exsists and password is correct, then creates a token that is returned, this token is used on all authorized routes
+
+POST  http://localhost:80/Login
+Content-Type: application/json
+
+{
+    "User":{
+        "email":"kyler.daybell@gmail.com",
+        "password":"kyler"
+    }
+}
+
+### this root route validates that a token is correct, for dev purposes only. 
+
+GET http://localhost:80/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imt5bGVyLmRheWJlbGxAZ21haWwuY29tIiwiYXV0aG9yaXphdGlvbiI6InVzZXIiLCJpYXQiOjE1ODc2NTg3OTAsImV4cCI6MTU4NzY1ODk3MH0.k2t92YObI15THhwUeWgbRIWDDs3BqhDn8CWjPNNz83M

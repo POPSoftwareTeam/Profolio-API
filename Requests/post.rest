@@ -1,0 +1,28 @@
+### create a post with an authorized user.
+POST http://localhost:80/CreatePost
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imt5bGVyLmRheWJlbGxAZ21haWwuY29tIiwicGFzc3dvcmQiOiJreWxlciIsImF1dGhvcml6YXRpb24iOiJhZG1pbiIsImlhdCI6MTU4NjI3MTcxNn0.aqxX5uF-zR4z4VEHDJ5pzP80l-xvXo1lnh4H9nEy-fw
+
+{
+    "post": {
+        "title":"welcome to the Pop-Project",
+        "content":"we are so excited to see you here, we hope that all of our hard work will help you create content in a more simple way."
+    }
+}
+
+
+### Get the top ten posts
+GET http://localhost:80/GetTopTenPosts
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imt5bGVyLmRheWJlbGxAZ21haWwuY29tIiwicGFzc3dvcmQiOiJreWxlciIsImF1dGhvcml6YXRpb24iOiJhZG1pbiIsImlhdCI6MTU4NjI3MTcxNn0.aqxX5uF-zR4z4VEHDJ5pzP80l-xvXo1lnh4H9nEy-fw
+
+POST http://localhost:80/UpdatePost
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imt5bGVyLmRheWJlbGxAZ21haWwuY29tIiwicGFzc3dvcmQiOiJreWxlciIsImF1dGhvcml6YXRpb24iOiJhZG1pbiIsImlhdCI6MTU4NjI3MTcxNn0.aqxX5uF-zR4z4VEHDJ5pzP80l-xvXo1lnh4H9nEy-fw
+{
+    "post": {
+        "id":"2",
+        "title":"welcome to the Pop-Project",
+        "content":"we are so excited to see you here, we hope that all of our hard work will help you create content in a more simple way."
+    }
+}

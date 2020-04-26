@@ -1,3 +1,3 @@
 export interface IMailerService{
-    SendRegistrationEmail(email:string):boolean;
+    SendRegistrationEmail(email:string):Promise<boolean>;
 }

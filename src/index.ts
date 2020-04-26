@@ -1,10 +1,15 @@
 import cors from "cors";
 import * as dotenv from "dotenv";
 import express from "express";
+//controllers
 import { UserController } from "./Controllers/UserController";
-import {MySqlUserRepository} from "./Repositories/MySqlUserRepository";
+//services
 import { JWTAuthenticationService } from "./Services/Authentication/JWTAuthenticateService";
 import { UserService } from "./Services/Users/UserService";
+import {MailerService} from "./Services/Email/MailerService"
+//repositories
+import {MySqlUserRepository} from "./Repositories/MySqlUserRepository";
+
 const result = dotenv.config();
 
 if (result.error) {
@@ -14,7 +19,8 @@ if (result.error) {
 const IUserRepository = new MySqlUserRepository();
 
 // services
-const IUserService = new UserService(IUserRepository);
+const IMailerService = new MailerService()
+const IUserService = new UserService(IUserRepository,IMailerService);
 const IAuthenticationService = new JWTAuthenticationService(IUserService);
 
 

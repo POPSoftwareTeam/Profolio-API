@@ -1,13 +1,16 @@
 import { User } from "../../Models/UserModel";
 import { IUserRepository } from "../../Repositories/IUserRepository";
 import {IUserService} from "./IUserService";
+import { IMailerService } from "../Email/IMailerService";
 
 export class UserService implements IUserService {
-    public iuserrepository: IUserRepository;
-    constructor(iuserrepository: IUserRepository) {
+    iuserrepository: IUserRepository;
+    imailservice: IMailerService
+    constructor(iuserrepository: IUserRepository,imailservice:IMailerService) {
         this.iuserrepository = iuserrepository;
+        this.imailservice = imailservice;
     }
-    EmailVerification(code: string): Promise<boolean> {
+    public async EmailVerification(code: string): Promise<boolean> {
         return Promise.resolve(true);
     }
     public async ValidateUser(user: User): Promise<User|null> {
@@ -32,7 +35,11 @@ export class UserService implements IUserService {
         const sercureuser = user.HashPassword();
         const result: boolean =  await this.iuserrepository.AddNewUser(sercureuser);
         if (result) {
-            return true;
+            if(await this.imailservice.SendRegistrationEmail(user.email)){
+                return true;
+            }else{
+                return false;
+            }
         } else {
             return false;
         }

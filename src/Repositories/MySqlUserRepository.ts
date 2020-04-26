@@ -17,7 +17,6 @@ export class MySqlUserRepository implements IUserRepository {
         return con;
     }
     public async AddNewUser(user: User): Promise<any> {
-        console.log("in the user add")
         if (user.email != "" && user.password != "") {
             const con = await this.getConnection();
             try {

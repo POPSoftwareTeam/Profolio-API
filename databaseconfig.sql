@@ -12,3 +12,10 @@ CREATE TABLE USER(
     UNIQUE KEY unique_email (EMAIL)
 );
 
+CREATE TABLE PHOTOS(
+    ID int NOT NULL AUTO_INCREMENT,
+    USER_ID int NOT NULL,
+    TITLE varchar (255) Not Null,
+    FILENAME varchar(255) Not Null,
+)
+

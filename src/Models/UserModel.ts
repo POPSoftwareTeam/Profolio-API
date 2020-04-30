@@ -1,5 +1,4 @@
 const bcrypt = require("bcryptjs");
-import { v1 as uuidv1 } from 'uuid';
 
 export class User {
     public readonly id: number|null;

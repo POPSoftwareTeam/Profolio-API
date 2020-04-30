@@ -10,13 +10,32 @@ export class PhotoController{
         this.iauthenticationservice = iauthenticationservice;
         this.iphotoservice = iphotoservice
     }
-    public async GetFullPhoto(req: Request,res:Response){
+    public async GetFullResPhoto(req: Request,res:Response){
         let user:User = await  this.iauthenticationservice.AuthenticateToken(req,res);
         if(user){
             console.log(req.params.PhotoID);
             let photo = await this.iphotoservice.GetFullResPhoto(req.params.PhotoID,user);
             res.writeHead(200, {'Content-Type': 'image/jpeg'});
             res.end(photo);
+        }
+    }
+    public async GetLowResPhoto(req: Request,res:Response){
+        let user:User = await  this.iauthenticationservice.AuthenticateToken(req,res);
+        if(user){
+            console.log(req.params.PhotoID);
+            let photo = await this.iphotoservice.GetLowResPhoto(req.params.PhotoID,user);
+            res.writeHead(200, {'Content-Type': 'image/jpeg'});
+            res.end(photo);
+        }
+    }
+
+    public async UploadPhoto(req:any,res:Response){
+        //let user:User = await  this.iauthenticationservice.AuthenticateToken(req,res);
+        let user = new User(0,"kyler.daybell96@gmail.com","","photographer")
+        if(user){
+            console.log(req.file);
+            let photo=req.file.buffer;
+            this.iphotoservice.UploadPhoto(photo,user)
         }
     }
 }

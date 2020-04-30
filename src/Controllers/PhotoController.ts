@@ -34,8 +34,8 @@ export class PhotoController{
         let user = new User(0,"kyler.daybell96@gmail.com","","photographer")
         if(user){
             console.log(req.file);
-            let photo=req.file.buffer;
-            this.iphotoservice.UploadPhoto(photo,user)
+            let buffer = req.file.buffer
+            this.iphotoservice.UploadPhoto(buffer,user)
         }
     }
 }

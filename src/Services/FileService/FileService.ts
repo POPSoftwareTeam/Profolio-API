@@ -1,9 +1,7 @@
 import { IFileService } from "./IFileService";
 const Jimp = require('jimp');
 const fs = require('fs');
-import stream from 'stream';
 
-const { Duplex } = stream;
 
 export class FileService implements IFileService{
 
@@ -19,10 +17,10 @@ export class FileService implements IFileService{
     }
 
     async CreateFullResImage(photo: any,guid:string) {
-        const duplexStream = new Duplex();
-        duplexStream.push(photo);
-        duplexStream.push(null);
-        await fs.writeFileSync(duplexStream,"./photo-storage/fullres/"+guid+".jpg")
+        console.log(photo)
+        await fs.writeFileSync(photo,"./"+guid+".jpg",'binary')
+
+        // await fs.writeFileSync(photo,"./photo-storage/fullres/"+guid+".jpg",'binary')
     }
 
     async CreateLowResImage(guid: string) {

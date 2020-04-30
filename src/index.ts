@@ -40,8 +40,10 @@ const bodyParser = require("body-parser");
 const json = bodyParser.json({limit: "50mb", type: "application/json"});
 const urlencoded = bodyParser.urlencoded({ extended: false })
 const multer = require('multer');
-var upload = multer({ dest: './uploads/' })
+var storage = multer.memoryStorage()
+var upload = multer({ storage: storage })
 
+console.log(process.cwd())
 
 app.use(cors());
 

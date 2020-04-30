@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { User } from "../Models/UserModel";
 import { IAuthenticationService } from "../Services/Authentication/IAuthenticationService";
 import { IPhotoService } from "../Services/PhotoService/IPhotoService";
+const fs = require('fs');
 
 export class PhotoController{
     readonly iauthenticationservice: IAuthenticationService;
@@ -33,9 +34,9 @@ export class PhotoController{
         //let user:User = await  this.iauthenticationservice.AuthenticateToken(req,res);
         let user = new User(0,"kyler.daybell96@gmail.com","","photographer")
         if(user){
-            console.log(req.file);
             let buffer = req.file.buffer
-            this.iphotoservice.UploadPhoto(buffer,user)
+            const data = new Uint8Array(buffer)
+            this.iphotoservice.UploadPhoto(data,user)
         }
     }
 }

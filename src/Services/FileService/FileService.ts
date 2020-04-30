@@ -17,10 +17,7 @@ export class FileService implements IFileService{
     }
 
     async CreateFullResImage(photo: any,guid:string) {
-        console.log(photo)
-        await fs.writeFileSync(photo,"./"+guid+".jpg",'binary')
-
-        // await fs.writeFileSync(photo,"./photo-storage/fullres/"+guid+".jpg",'binary')
+        await fs.writeFileSync("./photo-storage/fullres/"+guid+".jpg",photo,'binary')
     }
 
     async CreateLowResImage(guid: string) {

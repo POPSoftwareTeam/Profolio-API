@@ -55,7 +55,6 @@ export class JWTAuthenticationService implements IAuthenticationService {
             jwt.verify(token, process.env.ACCESS_TOKEN, (err: any, user: any) => {
                 if (err) {
                     res.sendStatus(403);
-                    console.log(err);
                     throw new Error("Invalid Token");
                 }
             });

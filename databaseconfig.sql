@@ -8,6 +8,7 @@ CREATE TABLE USER(
     EMAIL varchar(255) NOT NULL,
     PASSWORD varchar(255) NOT NULL,
     ROLE varchar(255) NOT NULL,
+    EMAILCODE varchar(255),
     PRIMARY KEY (ID),
     UNIQUE KEY unique_email (EMAIL)
 );

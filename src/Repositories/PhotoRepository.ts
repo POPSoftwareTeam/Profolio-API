@@ -13,14 +13,14 @@ export class PhotoRepository implements IPhotoRepository{
         });
         return con;
     }
-    public async CreatePhoto(guid: string, user: User): Promise<boolean> {
+    public async CreatePhoto(title:string,guid: string, user: User): Promise<boolean> {
         let con = await this.getConnection();
         try {
             const [rows] = await con.execute("SELECT * from USER where EMAIL = ?", [user.email]);
             if (typeof rows[0] != "undefined") {
                 const DBuser = new User(rows[0].ID, rows[0].EMAIL, rows[0].PASSWORD, rows[0].ROLE);
-                let [rows2] = await con.execute("INSERT INTO PHOTOS ", [user.email]);
-
+                let [rows2] = await con.execute("INSERT INTO PHOTO (USER_ID,FILENAME,TITLE) VALUES (?,?,?)", [DBuser.id,guid,title]);
+                
             } else {
                 throw new Error("user is undefined")
             }
@@ -29,6 +29,24 @@ export class PhotoRepository implements IPhotoRepository{
         } finally {
             con.end();
         }
+    }    
+    public async GetPhotosByUser(user: User): Promise<[string]> {
+        let con = await this.getConnection();
+        try {
+            const [rows] = await con.execute("SELECT PHOTO.FILENAME from USER inner join PHOTO on (PHOTO.USER_ID = USER.ID) where USER.EMAIL = ?", [user.email]);
+            if (typeof rows[0] != "undefined") {
+                let photoarray:[string] = [""]
+                for(let i = 0;i<rows.length;i++){
+                    photoarray.push(String(rows[i].FILENAME)+".jpg")
+                }
+                return photoarray
+            } else {
+                throw new Error("user is undefined")
+            }
+        } catch (error) {
+            return Promise.resolve([""]);
+        } finally {
+            con.end();
+        }
     }
-
 }

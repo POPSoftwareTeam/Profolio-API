@@ -14,7 +14,6 @@ export class PhotoController{
     public async GetFullResPhoto(req: Request,res:Response){
         let user:User = await  this.iauthenticationservice.AuthenticateToken(req,res);
         if(user){
-            console.log(req.params.PhotoID);
             let photo = await this.iphotoservice.GetFullResPhoto(req.params.PhotoID,user);
             res.writeHead(200, {'Content-Type': 'image/jpeg'});
             res.end(photo);
@@ -23,7 +22,6 @@ export class PhotoController{
     public async GetLowResPhoto(req: Request,res:Response){
         let user:User = await  this.iauthenticationservice.AuthenticateToken(req,res);
         if(user){
-            console.log(req.params.PhotoID);
             let photo = await this.iphotoservice.GetLowResPhoto(req.params.PhotoID,user);
             res.writeHead(200, {'Content-Type': 'image/jpeg'});
             res.end(photo);
@@ -31,13 +29,20 @@ export class PhotoController{
     }
 
     public async UploadPhoto(req:any,res:Response){
-        console.log("in upload photo")
         let user:User = await  this.iauthenticationservice.AuthenticateToken(req,res);
-        console.log(user)
         if(user){
             let buffer = req.file.buffer
             const data = new Uint8Array(buffer)
             this.iphotoservice.UploadPhoto(data,user)
+        }
+    }
+
+    public async GetUserPhotos(req:Request,res:Response){
+        let user:User = await  this.iauthenticationservice.AuthenticateToken(req,res);
+        if(user){
+            let photos = await this.iphotoservice.GetUserPhotos(user)
+            res.write(JSON.stringify({Status: "success", Data: photos}));
+            res.end();
         }
     }
 }

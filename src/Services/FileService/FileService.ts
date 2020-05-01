@@ -11,7 +11,6 @@ export class FileService implements IFileService{
             await this.CreateLowResImage(guid);
             return true
         }catch(e){
-            console.log(e)
             return false;
         }
     }
@@ -33,7 +32,6 @@ export class FileService implements IFileService{
     }
     
     public GetLowResImage(photoID: string) {
-        console.log(process.cwd())
         let photo = fs.readFileSync('./photo-storage/lowres/'+photoID)
         return photo
     }

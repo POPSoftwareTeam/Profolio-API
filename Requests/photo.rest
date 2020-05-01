@@ -1,18 +1,10 @@
 ### Getting the full res version of a photo
-GET http://localhost:80/Photos/FullRes/photo1.jpg
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imt5bGVyLmRheWJlbGw5NkBnbWFpbC5jb20iLCJhdXRob3JpemF0aW9uIjoicGhvdG9ncmFwaGVyIiwiaWF0IjoxNTg4MjcwNzU4LCJleHAiOjE1ODgyNzI1NTh9.xjwQk-H77J2d6YJRgRkp0_wS-BCn_XoYhjz3tFKiT08
+GET http://localhost:80/Photos/FullRes/39a14cd0-8bc2-11ea-998a-6b5b205711bf.jpg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imt5bGVyLmRheWJlbGw5NkBnbWFpbC5jb20iLCJhdXRob3JpemF0aW9uIjoicGhvdG9ncmFwaGVyIiwiaWF0IjoxNTg4MzQ2ODEyLCJleHAiOjE1ODgzNDg2MTJ9.XuYePs87Zk_zrCQsK7-rKtK6c6jqr2pA_dt1_SnC3vM
 ### getting the low res version of an image
 GET http://localhost:80/Photos/LowRes/photo1.jpg
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imt5bGVyLmRheWJlbGw5NkBnbWFpbC5jb20iLCJhdXRob3JpemF0aW9uIjoicGhvdG9ncmFwaGVyIiwiaWF0IjoxNTg4MjczNzU1LCJleHAiOjE1ODgyNzU1NTV9.IujZQVN2Ss3t_UGi-AUgL37hxE6iAa08UWr3whN4c1s
 
-### Uploading a photo
-POST http://localhost:80/Photos/Upload
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imt5bGVyLmRheWJlbGw5NkBnbWFpbC5jb20iLCJhdXRob3JpemF0aW9uIjoicGhvdG9ncmFwaGVyIiwiaWF0IjoxNTg4MjgwMzE2LCJleHAiOjE1ODgyODIxMTZ9.udpFgkMgoOVLGYjiuG8p0Bg_h3dPvVopcfFtDcqqLwo
-
-enctype: multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW
-
-------WebKitFormBoundary7MA4YWxkTrZu0gW
-Content-Disposition: form-data;type="file"; name="avatar"; 
-
-< ./song.mp3
-------WebKitFormBoundary7MA4YWxkTrZu0gW--
+### getting photos by user email note: you must be logged in as this user
+GET http://localhost:80/Photos/MyPhotos
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imt5bGVyLmRheWJlbGw5NkBnbWFpbC5jb20iLCJhdXRob3JpemF0aW9uIjoicGhvdG9ncmFwaGVyIiwiaWF0IjoxNTg4MzQ2ODEyLCJleHAiOjE1ODgzNDg2MTJ9.XuYePs87Zk_zrCQsK7-rKtK6c6jqr2pA_dt1_SnC3vM

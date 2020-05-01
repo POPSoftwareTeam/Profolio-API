@@ -13,6 +13,7 @@ import {DummyPhotoService} from "./Services/PhotoService/DummyPhotoService"
 
 //repositories
 import {UserRepository} from "./Repositories/UserRepository";
+import { PhotoRepository } from "./Repositories/PhotoRepository";
 
 const result = dotenv.config();
 
@@ -21,13 +22,14 @@ if (result.error) {
 }
 // repositorys
 const IUserRepository = new UserRepository();
+const IPhotoRepository = new PhotoRepository();
 
 // services
 const IMailerService = new MailerService()
 const IUserService = new UserService(IUserRepository,IMailerService);
 const IAuthenticationService = new JWTAuthenticationService(IUserService);
 const IFileService = new FileService();
-const IPhotoService = new DummyPhotoService(IFileService);
+const IPhotoService = new DummyPhotoService(IFileService,IPhotoRepository);
 
 
 // controllers
@@ -43,7 +45,6 @@ const multer = require('multer');
 var storage = multer.memoryStorage()
 var upload = multer({ storage: storage })
 
-console.log(process.cwd())
 
 app.use(cors());
 
@@ -59,7 +60,7 @@ app.get("/Verify/PhotographerEmail/:guid",(req,res)=>userController.VerifyPhotog
 //Photo Viewing Routes
 app.get("/Photos/FullRes/:PhotoID",json,(req,res)=>photoController.GetFullResPhoto(req,res));
 app.get("/Photos/LowRes/:PhotoID",json,(req,res)=>photoController.GetLowResPhoto(req,res));
-
+app.get("/Photos/MyPhotos",json,(req,res)=>photoController.GetUserPhotos(req,res))
 
 var cpUpload = upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'gallery', maxCount: 8 }])
 //Uploading image

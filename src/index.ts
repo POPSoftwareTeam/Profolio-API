@@ -51,7 +51,7 @@ app.use(cors());
 app.get("/", json,(req, res) => userController.GetRoot(req, res));
 app.post("/Register/Client", json,(req, res) => userController.PostClientRegister(req, res));
 app.post("/Register/Photographer", json,(req, res) => userController.PostPhotographerRegister(req, res));
-app.post("/Login", json,(req, res) => IAuthenticationService.AuthenticateUser(req, res));
+app.post("/Login", json,(req, res) => userController.PostLogin(req, res));
 app.post("/DeleteAccount",json, (req, res) => userController.PostDeleteUser(req, res));
 app.get("/Verify/ClientEmail/:guid",(req,res)=>userController.VerifyClientEmail(req,res));
 app.get("/Verify/PhotographerEmail/:guid",(req,res)=>userController.VerifyPhotographerEmail(req,res));

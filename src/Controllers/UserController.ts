@@ -35,6 +35,7 @@ export class UserController {
         }
     }
     public async PostLogin(req: Request, res: Response): Promise<void> {
+        console.log("In Login");
         await this.iauthenticationservice.AuthenticateUser(req, res);
     }
     public async PostDeleteUser(req: Request, res: Response): Promise<void>  {

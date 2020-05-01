@@ -31,8 +31,9 @@ export class PhotoController{
     }
 
     public async UploadPhoto(req:any,res:Response){
-        //let user:User = await  this.iauthenticationservice.AuthenticateToken(req,res);
-        let user = new User(0,"kyler.daybell96@gmail.com","","photographer")
+        console.log("in upload photo")
+        let user:User = await  this.iauthenticationservice.AuthenticateToken(req,res);
+        console.log(user)
         if(user){
             let buffer = req.file.buffer
             const data = new Uint8Array(buffer)

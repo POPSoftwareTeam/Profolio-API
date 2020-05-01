@@ -10,8 +10,7 @@ export class DummyPhotoService implements IPhotoService{
         this.ifileservice = ifileservice
     }
     public async GetLowResPhoto(photoID: string, user: User) {
-        await this.ifileservice.CreateLowResImage(photoID);
-        let FullResPhoto = await this.ifileservice.GetLowResImage(photoID);
+        return await this.ifileservice.GetLowResImage(photoID);
     }
     public async GetFullResPhoto(photoID: string, user: any) {
         return await this.ifileservice.GetFullResImage(photoID);
@@ -21,6 +20,7 @@ export class DummyPhotoService implements IPhotoService{
         try{
             const guid = uuidv1()
             await this.ifileservice.CreateImage(photo,guid);
+            
             return true;
         }catch(e){
             return false

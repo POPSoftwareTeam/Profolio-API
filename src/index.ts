@@ -12,7 +12,7 @@ import { FileService } from "./Services/FileService/FileService";
 import {DummyPhotoService} from "./Services/PhotoService/DummyPhotoService"
 
 //repositories
-import {MySqlUserRepository} from "./Repositories/MySqlUserRepository";
+import {UserRepository} from "./Repositories/UserRepository";
 
 const result = dotenv.config();
 
@@ -20,7 +20,7 @@ if (result.error) {
   throw result.error;
 }
 // repositorys
-const IUserRepository = new MySqlUserRepository();
+const IUserRepository = new UserRepository();
 
 // services
 const IMailerService = new MailerService()

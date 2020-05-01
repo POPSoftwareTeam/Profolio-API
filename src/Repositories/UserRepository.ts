@@ -2,9 +2,9 @@ import { User } from "../Models/UserModel";
 import { IUserRepository } from "./IUserRepository";
 const mysql2 = require("mysql2/promise");
 
-export class MySqlUserRepository implements IUserRepository {
+export class UserRepository implements IUserRepository {
     
-    public async getConnection() {
+    async getConnection() {
         const con = await mysql2.createConnection({
             host: process.env.DB_HOST,
             user: process.env.DB_USER,
@@ -29,14 +29,19 @@ export class MySqlUserRepository implements IUserRepository {
     }
     public async GetExsistingUser(user: User): Promise<User> {
         const con = await this.getConnection();
-        const [rows] = await con.execute("SELECT * from USER where EMAIL = ?", [user.email]);
-        con.end();
-        if (typeof rows[0] === "undefined") {
+        try{
+            const [rows] = await con.execute("SELECT * from USER where EMAIL = ?", [user.email]);
+            if (typeof rows[0] != "undefined") {
+                const DBuser = new User(rows[0].ID, rows[0].EMAIL, rows[0].PASSWORD, rows[0].ROLE);
+                return Promise.resolve(DBuser);
+            } else {
+                throw new Error("user is undefined")
+            }
+        }catch(e){
             const DBuser = new User(null, "void", "void", "unverified");
             return Promise.resolve(DBuser);
-        } else {
-            const DBuser = new User(rows[0].ID, rows[0].EMAIL, rows[0].PASSWORD, rows[0].ROLE);
-            return Promise.resolve(DBuser);
+        }finally{
+            con.end();
         }
     }
     public async RemoveUser(user: User): Promise<any> {

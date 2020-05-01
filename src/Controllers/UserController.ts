@@ -17,7 +17,7 @@ export class UserController {
             res.end();
             return;
         } else {
-            res.write(JSON.stringify({Status: "faliure", Message: "Failed to add the client to the database"}));
+            res.write(JSON.stringify({Status: "failure", Message: "Failed to add the client to the database"}));
             res.end();
             return;
         }
@@ -29,7 +29,7 @@ export class UserController {
             res.end();
             return;
         } else {
-            res.write(JSON.stringify({Status: "faliure", Message: "Failed to add the photographer to the database"}));
+            res.write(JSON.stringify({Status: "failure", Message: "Failed to add the photographer to the database"}));
             res.end();
             return;
         }
@@ -46,7 +46,7 @@ export class UserController {
                 res.end();
                 return;
             } else {
-                res.write(JSON.stringify({Status: "faliure", Message: "The user does not exsist or the password is incorrect"}));
+                res.write(JSON.stringify({Status: "failure", Message: "The user does not exsist or the password is incorrect"}));
                 res.end();
                 return;
             }
@@ -71,7 +71,7 @@ export class UserController {
             res.end();
             return;
         } else {
-            res.write(JSON.stringify({Status: "faliure", Message: "The client email was not verified"}));
+            res.write(JSON.stringify({Status: "failure", Message: "The client email was not verified"}));
             res.end();
             return;
         }
@@ -84,7 +84,7 @@ export class UserController {
             res.end();
             return;
         } else {
-            res.write(JSON.stringify({Status: "faliure", Message: "The photographer email was not verified"}));
+            res.write(JSON.stringify({Status: "failure", Message: "The photographer email was not verified"}));
             res.end();
             return;
         }

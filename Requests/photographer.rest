@@ -11,5 +11,5 @@ Content-Type: application/json
 
 ### getting photos by user email note: you must be logged in as this user
 GET http://localhost:80/Photographer/MyPhotos
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imt5bGVyLmRheWJlbGw5NkBnbWFpbC5jb20iLCJhdXRob3JpemF0aW9uIjoiY2xpZW50IiwiaWF0IjoxNTg4NjEzNTU2LCJleHAiOjE1ODg2MTUzNTZ9.Tg9cp6ARF7p-cyrsvMq_EXhIVXiu2oKWJdQPmRRz4LM
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imt5bGVyLmRheWJlbGw5NkBnbWFpbC5jb20iLCJhdXRob3JpemF0aW9uIjoiY2xpZW50IiwiaWF0IjoxNTg4NjE5NjgyLCJleHAiOjE1ODg2MjE0ODJ9.W2gUWyLbzR7ShFLZV_0CNPYDX06RCpXni6VlDPpqhEY
 

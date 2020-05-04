@@ -54,13 +54,4 @@ export class PhotoController{
             }
         }
     }
-
-    public async GetUserPhotos(req:Request,res:Response){
-        let user:User = await  this.iauthenticationservice.AuthenticateToken(req,res);
-        if(user){
-            let photos = await this.iphotoservice.GetUserPhotos(user)
-            res.write(JSON.stringify({Status: "success", Data: photos}));
-            res.end();
-        }
-    }
 }

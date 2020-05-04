@@ -30,4 +30,8 @@ export class PhotographerService implements IPhotographerService{
         return false;
     }
 
+    public async GetUserPhotos(user: User): Promise<[string]> {
+        return await this.iphotorepository.GetPhotosByUser(user);
+    }
+
 }

@@ -24,4 +24,12 @@ export class PhotographerController{
 
         }
     }
+    public async GetUserPhotos(req:Request,res:Response){
+        let user:User = await  this.iauthenticationservice.AuthenticateToken(req,res);
+        if(user){
+            let photos = await this.iphotographerservice.GetUserPhotos(user)
+            res.write(JSON.stringify({Status: "success", Data: photos}));
+            res.end();
+        }
+    }
 }

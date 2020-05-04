@@ -72,4 +72,37 @@ export class PhotoRepository implements IPhotoRepository{
             con.end();
         }
     }
+    public async GetPhotoIDByFILENAME(guid:string){
+        let con = await this.getConnection();
+        try {
+            const [rows] = await con.execute("SELECT ID from PHOTO where FILENAME = ?", [guid]);
+            if (typeof rows[0] != "undefined") {
+                return rows[0].ID
+            } else {
+                throw new Error("user is undefined")
+            }
+        } catch (error) {
+            this.iloggerservice.error(error);
+            throw new Error("Photo not found")
+        } finally {
+            con.end();
+        }
+    }
+
+    public async AddViewingPermissions(clientID:number,guid:string,permission:string):Promise<Boolean>{
+        let con = await this.getConnection();
+        try {
+            this.iloggerservice.log(String(clientID));
+            this.iloggerservice.log(String(guid));
+            this.iloggerservice.log(String(permission));
+            let photoID = await this.GetPhotoIDByFILENAME(guid);
+            const [rows] = await con.execute("INSERT into USER_PHOTO (USER_ID,PHOTO_ID,PERMISSION) VALUES (?,?,?)", [clientID,photoID,permission]);
+            return true
+        }catch(error){
+            this.iloggerservice.error(error);
+            return false;
+        }finally {
+            con.end();
+        }
+    }
 }

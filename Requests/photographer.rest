@@ -1,0 +1,15 @@
+### Adding a client to the viewers table so that they can access a photo
+POST http://localhost:80/Photographer/GrantClientPermissions
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imt5bGVyLmRheWJlbGw5NkBnbWFpbC5jb20iLCJhdXRob3JpemF0aW9uIjoiY2xpZW50IiwiaWF0IjoxNTg4NjE4MDY1LCJleHAiOjE1ODg2MTk4NjV9.tXTLh5ZTqqBft0ZZXvnvX1XMvm13wl_l8QHbsm7gGlY
+Content-Type: application/json
+
+{	
+	"Email":"kyler.daybell96@gmail.com",
+    "Photo":"07eb38f0-8e2d-11ea-9a81-335d22bf4865.jpg",
+    "Permission":"Full_Res"
+}
+
+### getting photos by user email note: you must be logged in as this user
+GET http://localhost:80/Photographer/MyPhotos
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imt5bGVyLmRheWJlbGw5NkBnbWFpbC5jb20iLCJhdXRob3JpemF0aW9uIjoiY2xpZW50IiwiaWF0IjoxNTg4NjEzNTU2LCJleHAiOjE1ODg2MTUzNTZ9.Tg9cp6ARF7p-cyrsvMq_EXhIVXiu2oKWJdQPmRRz4LM
+

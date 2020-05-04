@@ -4,7 +4,3 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imt5bGVyL
 ### getting the low res version of an image
 GET http://localhost:80/Photos/LowRes/07eb38f0-8e2d-11ea-9a81-335d22bf4865.jpg
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJlbHlrLnBob3RvZ3JhcGh5Lmt5bGVyQGdtYWlsLmNvbSIsImF1dGhvcml6YXRpb24iOiJwaG90b2dyYXBoZXIiLCJpYXQiOjE1ODg2MTM3NDIsImV4cCI6MTU4ODYxNTU0Mn0.IkPatzs4OyJacH6Clcbz55ZDd-JqTO8P-ucH9FhWPsA
-### getting photos by user email note: you must be logged in as this user
-GET http://localhost:80/Photos/MyPhotos
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imt5bGVyLmRheWJlbGw5NkBnbWFpbC5jb20iLCJhdXRob3JpemF0aW9uIjoiY2xpZW50IiwiaWF0IjoxNTg4NjEzNTU2LCJleHAiOjE1ODg2MTUzNTZ9.Tg9cp6ARF7p-cyrsvMq_EXhIVXiu2oKWJdQPmRRz4LM
-

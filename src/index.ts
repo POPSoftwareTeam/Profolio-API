@@ -10,11 +10,13 @@ import { JWTAuthenticationService } from "./Services/Authentication/JWTAuthentic
 import { UserService } from "./Services/Users/UserService";
 import {MailerService} from "./Services/Email/MailerService"
 import { FileService } from "./Services/FileService/FileService";
-import {DummyPhotoService} from "./Services/PhotoService/DummyPhotoService"
+import {DummyPhotoService} from "./Services/Photo/DummyPhotoService"
 
 //repositories
 import {UserRepository} from "./Repositories/UserRepository";
 import { PhotoRepository } from "./Repositories/PhotoRepository";
+import { PhotographerController } from "./Controllers/PhotographerController";
+import { PhotographerService } from "./Services/Photographer/PhotographerService";
 
 const result = dotenv.config();
 
@@ -34,11 +36,13 @@ const IUserService = new UserService(IUserRepository,IMailerService);
 const IAuthenticationService = new JWTAuthenticationService(IUserService);
 const IFileService = new FileService();
 const IPhotoService = new DummyPhotoService(IFileService,IPhotoRepository);
+const IPhotographerService = new PhotographerService(ILoggerService,IPhotoRepository,IUserRepository)
 
 
 // controllers
 const userController = new UserController(IUserService, IAuthenticationService);
 const photoController = new PhotoController(IAuthenticationService,IPhotoService);
+const photographerController = new PhotographerController(ILoggerService,IAuthenticationService,IPhotographerService);
 
 // app setup.
 const app = express();
@@ -64,11 +68,13 @@ app.get("/Verify/PhotographerEmail/:guid",(req,res)=>userController.VerifyPhotog
 //Photo Viewing Routes
 app.get("/Photos/FullRes/:PhotoID",json,(req,res)=>photoController.GetFullResPhoto(req,res));
 app.get("/Photos/LowRes/:PhotoID",json,(req,res)=>photoController.GetLowResPhoto(req,res));
-app.get("/Photos/MyPhotos",json,(req,res)=>photoController.GetUserPhotos(req,res))
 
-var cpUpload = upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'gallery', maxCount: 8 }])
 //Uploading image
 app.post("/Photos/Upload",urlencoded, upload.single('avatar'),(req,res)=>photoController.UploadPhoto(req,res))
+
+//Photographer Control Routes
+app.get("/Photographer/MyPhotos",json,(req,res)=>photoController.GetUserPhotos(req,res))
+app.post("/Photographer/GrantClientPermissions",json, (req,res)=>photographerController.GrantClientPermission(req,res))
 
 
 app.listen(80, () =>

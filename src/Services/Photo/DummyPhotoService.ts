@@ -42,7 +42,5 @@ export class DummyPhotoService implements IPhotoService{
         }
         
     }
-    public async GetUserPhotos(user: User): Promise<[string]> {
-        return await this.iphotorepository.GetPhotosByUser(user);
-    }
+
 }

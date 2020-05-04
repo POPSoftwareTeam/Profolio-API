@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { User } from "../Models/UserModel";
 import { IAuthenticationService } from "../Services/Authentication/IAuthenticationService";
-import { IPhotoService } from "../Services/PhotoService/IPhotoService";
+import { IPhotoService } from "../Services/Photo/IPhotoService";
 const fs = require('fs');
 
 export class PhotoController{

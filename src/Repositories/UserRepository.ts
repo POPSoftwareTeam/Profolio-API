@@ -31,7 +31,7 @@ export class UserRepository implements IUserRepository {
             }
         }
     }
-    public async GetExsistingUser(user: User): Promise<User> {
+    public async GetExistingUser(user: User): Promise<User> {
         const con = await this.getConnection();
         try{
             const [rows] = await con.execute("SELECT * from USER where EMAIL = ?", [user.email]);

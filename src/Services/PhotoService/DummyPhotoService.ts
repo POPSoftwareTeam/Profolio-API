@@ -13,10 +13,22 @@ export class DummyPhotoService implements IPhotoService{
         this.iphotorepository = iphotorepository;
     }
     public async GetLowResPhoto(photoID: string, user: User) {
-        return await this.ifileservice.GetLowResImage(photoID);
+        let guid = photoID.split(".")[0]
+        let DBUserEmail = await this.iphotorepository.GetOwnerEmailByPhoto(guid)
+        if(user.email == DBUserEmail){
+            return await this.ifileservice.GetLowResImage(photoID);
+        }else{
+            null
+        }
     }
     public async GetFullResPhoto(photoID: string, user: any) {
-        return await this.ifileservice.GetFullResImage(photoID);
+        let guid = photoID.split(".")[0]
+        let DBUserEmail = await this.iphotorepository.GetOwnerEmailByPhoto(guid)
+        if(user.email == DBUserEmail){
+            return await this.ifileservice.GetFullResImage(photoID);
+        }else{
+            null
+        }
     }
     
     public async UploadPhoto(photo: any, user: User) {

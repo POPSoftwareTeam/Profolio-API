@@ -49,4 +49,20 @@ export class PhotoRepository implements IPhotoRepository{
             con.end();
         }
     }
+    public async GetOwnerEmailByPhoto(guid: string): Promise<string> {
+        let con = await this.getConnection();
+        try {
+            const [rows] = await con.execute("SELECT USER.EMAIL from USER inner join PHOTO on (PHOTO.USER_ID = USER.ID) WHERE PHOTO.FILENAME=?", [guid]);
+            if(rows[0]["EMAIL"]){
+                return rows[0]["EMAIL"]
+            }else{
+                throw("user does not exist")
+            }
+        }catch(e){
+            console.log(e)
+            return "";
+        }finally {
+            con.end();
+        }
+    }
 }

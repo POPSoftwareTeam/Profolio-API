@@ -15,25 +15,43 @@ export class PhotoController{
         let user:User = await  this.iauthenticationservice.AuthenticateToken(req,res);
         if(user){
             let photo = await this.iphotoservice.GetFullResPhoto(req.params.PhotoID,user);
-            res.writeHead(200, {'Content-Type': 'image/jpeg'});
-            res.end(photo);
+            if(photo){
+                res.writeHead(200, {'Content-Type': 'image/jpeg'});
+                res.end(photo);
+                return
+            }else{
+                res.sendStatus(403);
+            }
         }
     }
     public async GetLowResPhoto(req: Request,res:Response){
         let user:User = await  this.iauthenticationservice.AuthenticateToken(req,res);
         if(user){
             let photo = await this.iphotoservice.GetLowResPhoto(req.params.PhotoID,user);
-            res.writeHead(200, {'Content-Type': 'image/jpeg'});
-            res.end(photo);
+            if(photo){
+                res.writeHead(200, {'Content-Type': 'image/jpeg'});
+                res.end(photo);
+                return
+            }else{
+                res.sendStatus(403);
+            }
         }
+        
     }
 
     public async UploadPhoto(req:any,res:Response){
         let user:User = await  this.iauthenticationservice.AuthenticateToken(req,res);
         if(user){
-            let buffer = req.file.buffer
-            const data = new Uint8Array(buffer)
-            this.iphotoservice.UploadPhoto(data,user)
+            try{
+                let buffer = req.file.buffer
+                const data = new Uint8Array(buffer)
+                await this.iphotoservice.UploadPhoto(data,user)
+                res.write(JSON.stringify({Status: "success"}));
+                res.end();
+            }catch(e){
+                res.write(JSON.stringify({Status: "failure"}));
+                res.end();
+            }
         }
     }
 

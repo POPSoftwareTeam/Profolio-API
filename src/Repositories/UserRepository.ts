@@ -1,9 +1,13 @@
 import { User } from "../Models/UserModel";
 import { IUserRepository } from "./IUserRepository";
+import { ILoggerService } from "../Services/Logging/ILoggerService";
 const mysql2 = require("mysql2/promise");
 
 export class UserRepository implements IUserRepository {
-    
+    readonly iloggerservice:ILoggerService
+    constructor(iloggerservice:ILoggerService){
+        this.iloggerservice = iloggerservice
+    }
     async getConnection() {
         const con = await mysql2.createConnection({
             host: process.env.DB_HOST,
@@ -37,7 +41,8 @@ export class UserRepository implements IUserRepository {
             } else {
                 throw new Error("user is undefined")
             }
-        }catch(e){
+        }catch(error){
+            this.iloggerservice.error(error);
             const DBuser = new User(null, "void", "void", "unverified");
             return Promise.resolve(DBuser);
         }finally{
@@ -50,6 +55,7 @@ export class UserRepository implements IUserRepository {
             const [rows] = await con.execute("Delete from USER where EMAIL = ?", [user.email]);
             return Promise.resolve(true);
         } catch (error) {
+            this.iloggerservice.error(error);
             return Promise.resolve(false);
         } finally {
             con.end();
@@ -63,6 +69,7 @@ export class UserRepository implements IUserRepository {
             const [rows2] = await con.execute("UPDATE USER set EMAILCODE = ?,ROLE=? WHERE ID = ?",["NULL",level,userID])
             return Promise.resolve(true);
         } catch (error) {
+            this.iloggerservice.error(error);
             return Promise.resolve(false);
         } finally {
             con.end();

@@ -5,6 +5,7 @@ import express from "express";
 import { UserController } from "./Controllers/UserController";
 import {PhotoController} from "./Controllers/PhotoController";
 //services
+import {ConsoleLoggerService} from "./Services/Logging/ConsoleLoggerService"
 import { JWTAuthenticationService } from "./Services/Authentication/JWTAuthenticateService";
 import { UserService } from "./Services/Users/UserService";
 import {MailerService} from "./Services/Email/MailerService"
@@ -20,9 +21,12 @@ const result = dotenv.config();
 if (result.error) {
   throw result.error;
 }
+//Logging Service
+const ILoggerService = new ConsoleLoggerService()
+
 // repositorys
-const IUserRepository = new UserRepository();
-const IPhotoRepository = new PhotoRepository();
+const IUserRepository = new UserRepository(ILoggerService);
+const IPhotoRepository = new PhotoRepository(ILoggerService);
 
 // services
 const IMailerService = new MailerService()

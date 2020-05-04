@@ -72,7 +72,7 @@ export class PhotoRepository implements IPhotoRepository{
             con.end();
         }
     }
-    public async GetPhotoIDByFILENAME(guid:string){
+    public async GetPhotoIDByFILENAME(guid:string):Promise<string>{
         let con = await this.getConnection();
         try {
             const [rows] = await con.execute("SELECT ID from PHOTO where FILENAME = ?", [guid]);

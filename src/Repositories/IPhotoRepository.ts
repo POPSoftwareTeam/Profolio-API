@@ -6,5 +6,6 @@ export interface IPhotoRepository{
     GetOwnerEmailByPhoto(guid:string):Promise<string>
     AddViewingPermissions(clientID:number,guid:string,permission:string):Promise<Boolean>
     GetPhotoIDByFILENAME(guid:string):Promise<string>
-    getAllPhotosSharedWithClient(email:string):Promise<[string]>
+    GetAllPhotosSharedWithClient(email:string):Promise<[string]>
+    IsPhotoSharedWithClient(guid: string, email:string):Promise<"Low_Res"|"Full_Res"|"No_Access">
 }

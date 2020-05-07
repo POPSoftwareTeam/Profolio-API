@@ -99,7 +99,7 @@ export class PhotoRepository implements IPhotoRepository{
             con.end();
         }
     }
-    public async getAllPhotosSharedWithClient(email: string): Promise<[string]> {
+    public async GetAllPhotosSharedWithClient(email: string): Promise<[string]> {
         let con = await this.getConnection()
         try{
             const [rows] = await con.execute("Select PHOTO.FILENAME from USER inner join USER_PHOTO on (USER.ID = USER_PHOTO.USER_ID) inner join PHOTO on (USER_PHOTO.PHOTO_ID = PHOTO.ID) where USER.EMAIL = ?",[email]);
@@ -113,6 +113,24 @@ export class PhotoRepository implements IPhotoRepository{
         }catch(error){
             this.iloggerservice.error(error)
             throw(error);
+        }finally{
+            con.end()
+        }
+    }
+    public async IsPhotoSharedWithClient(guid: string, email: string): Promise<"Low_Res"|"Full_Res"|"No_Access"> {
+        let con = await this.getConnection()
+        try{
+            const [rows] = await con.execute("Select USER_PHOTO.PERMISSION from USER inner join USER_PHOTO on (USER.ID = USER_PHOTO.USER_ID) inner join PHOTO on (USER_PHOTO.PHOTO_ID = PHOTO.ID) where USER.EMAIL = ? AND PHOTO.FILENAME=?",[email,guid]);
+            if (typeof rows[0] != "undefined") {
+                //let photoarray =  this.generateFileNameList(rows);
+                return(rows[0].PERMISSION)
+
+            } else {
+                throw new Error("No matching items")
+            }
+        }catch(error){
+            this.iloggerservice.error(error)
+            return("No_Access")
         }finally{
             con.end()
         }

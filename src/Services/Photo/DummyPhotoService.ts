@@ -13,21 +13,19 @@ export class DummyPhotoService implements IPhotoService{
         this.iphotorepository = iphotorepository;
     }
     public async GetLowResPhoto(photoID: string, user: User) {
-        let guid = photoID.split(".")[0]
-        let DBUserEmail = await this.iphotorepository.GetOwnerEmailByPhoto(guid)
-        if(user.email == DBUserEmail){
+        let permission = await this.UserHasPhotoAccess(photoID,user.email);
+        if(permission == "Full_Res"|| permission == "Low_Res"){
             return await this.ifileservice.GetLowResImage(photoID);
         }else{
-            null
+            return null;
         }
     }
     public async GetFullResPhoto(photoID: string, user: any) {
-        let guid = photoID.split(".")[0]
-        let DBUserEmail = await this.iphotorepository.GetOwnerEmailByPhoto(guid)
-        if(user.email == DBUserEmail){
+        let permission = await this.UserHasPhotoAccess(photoID,user.email);
+        if(permission == "Full_Res"){
             return await this.ifileservice.GetFullResImage(photoID);
         }else{
-            null
+            return null;
         }
     }
     
@@ -41,6 +39,19 @@ export class DummyPhotoService implements IPhotoService{
             return false
         }
         
+    }
+
+    private async UserHasPhotoAccess(photoID:string,email:string):Promise<"Low_Res"|"Full_Res"|"No_Access">{
+        let guid = photoID.split(".")[0]
+        let DBUserEmail = await this.iphotorepository.GetOwnerEmailByPhoto(guid)
+        //if the person is the owner of the photo
+        if(email == DBUserEmail){
+            return "Full_Res";
+        }else{
+            //if the person has been granted access to the photo by the photo owner.
+            let Shared = await this.iphotorepository.IsPhotoSharedWithClient(guid,email)
+            return Shared;
+        }
     }
 
 }

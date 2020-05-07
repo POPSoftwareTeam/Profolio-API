@@ -15,6 +15,7 @@ export class PhotographerController{
         this.iphotographerservice = iphotographerservice;
     }
     public async GrantClientPermission(req:Request,res:Response){
+        this.iloggerservice.log("IP:"+req.connection.remoteAddress+" Controller: Photographer Function: GrantClientPermission Time:"+Date.now());
         let user:User = await  this.iauthenticationservice.AuthenticateToken(req,res);
         let clientEmail = req.body.Email;
         let photoID = req.body.Photo;
@@ -25,6 +26,7 @@ export class PhotographerController{
         }
     }
     public async GetUserPhotos(req:Request,res:Response){
+        this.iloggerservice.log("IP:"+req.connection.remoteAddress+" Controller: Photographer Function: GetUserPhotos Time:"+Date.now());
         let user:User = await  this.iauthenticationservice.AuthenticateToken(req,res);
         if(user){
             let photos = await this.iphotographerservice.GetUserPhotos(user)

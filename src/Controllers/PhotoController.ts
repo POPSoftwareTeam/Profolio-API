@@ -2,16 +2,20 @@ import { Request, Response } from "express";
 import { User } from "../Models/UserModel";
 import { IAuthenticationService } from "../Services/Authentication/IAuthenticationService";
 import { IPhotoService } from "../Services/Photo/IPhotoService";
-const fs = require('fs');
+import { ILoggerService } from "../Services/Logging/ILoggerService";
+
 
 export class PhotoController{
     readonly iauthenticationservice: IAuthenticationService;
     readonly iphotoservice: IPhotoService;
-    constructor(iauthenticationservice:IAuthenticationService,iphotoservice:IPhotoService){
+    readonly iloggerservice: ILoggerService
+    constructor(iloggerservice:ILoggerService,iauthenticationservice:IAuthenticationService,iphotoservice:IPhotoService){
         this.iauthenticationservice = iauthenticationservice;
         this.iphotoservice = iphotoservice
+        this.iloggerservice = iloggerservice
     }
     public async GetFullResPhoto(req: Request,res:Response){
+        this.iloggerservice.log("IP:"+req.connection.remoteAddress+" Controller: Photo Function: GetFullResPhoto Time:"+Date.now());
         let user:User = await  this.iauthenticationservice.AuthenticateToken(req,res);
         if(user){
             let photo = await this.iphotoservice.GetFullResPhoto(req.params.PhotoID,user);
@@ -25,6 +29,7 @@ export class PhotoController{
         }
     }
     public async GetLowResPhoto(req: Request,res:Response){
+        this.iloggerservice.log("IP:"+req.connection.remoteAddress+" Controller: Photo Function: GetLowResPhoto Time:"+Date.now());
         let user:User = await  this.iauthenticationservice.AuthenticateToken(req,res);
         if(user){
             let photo = await this.iphotoservice.GetLowResPhoto(req.params.PhotoID,user);
@@ -40,6 +45,7 @@ export class PhotoController{
     }
 
     public async UploadPhoto(req:any,res:Response){
+        this.iloggerservice.log("IP:"+req.connection.remoteAddress+" Controller: Photo Function: UploadPhoto Time:"+Date.now());
         let user:User = await  this.iauthenticationservice.AuthenticateToken(req,res);
         if(user){
             try{
@@ -49,6 +55,7 @@ export class PhotoController{
                 res.write(JSON.stringify({Status: "success"}));
                 res.end();
             }catch(e){
+                this.iloggerservice.error("IP:"+req.connection.remoteAddress+" Controller: Photo Function: UploadPhoto Time:"+Date.now()+"Error:"+e)
                 res.write(JSON.stringify({Status: "failure"}));
                 res.end();
             }

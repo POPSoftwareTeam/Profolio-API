@@ -41,11 +41,8 @@ export class PhotoRepository implements IPhotoRepository{
         try {
             const [rows] = await con.execute("SELECT PHOTO.FILENAME from USER inner join PHOTO on (PHOTO.OWNER_ID = USER.ID) where USER.EMAIL = ?", [user.email]);
             if (typeof rows[0] != "undefined") {
-                let photoarray:[string] = [""]
-                for(let i = 0;i<rows.length;i++){
-                    photoarray.push(String(rows[i].FILENAME)+".jpg")
-                }
-                return photoarray
+                let photoarray =  this.generateFileNameList(rows);
+                return photoarray;
             } else {
                 throw new Error("user is undefined")
             }
@@ -92,9 +89,6 @@ export class PhotoRepository implements IPhotoRepository{
     public async AddViewingPermissions(clientID:number,guid:string,permission:string):Promise<Boolean>{
         let con = await this.getConnection();
         try {
-            this.iloggerservice.log(String(clientID));
-            this.iloggerservice.log(String(guid));
-            this.iloggerservice.log(String(permission));
             let photoID = await this.GetPhotoIDByFILENAME(guid);
             const [rows] = await con.execute("INSERT into USER_PHOTO (USER_ID,PHOTO_ID,PERMISSION) VALUES (?,?,?)", [clientID,photoID,permission]);
             return true
@@ -104,5 +98,31 @@ export class PhotoRepository implements IPhotoRepository{
         }finally {
             con.end();
         }
+    }
+    public async getAllPhotosSharedWithClient(email: string): Promise<[string]> {
+        let con = await this.getConnection()
+        try{
+            const [rows] = await con.execute("Select PHOTO.FILENAME from USER inner join USER_PHOTO on (USER.ID = USER_PHOTO.USER_ID) inner join PHOTO on (USER_PHOTO.PHOTO_ID = PHOTO.ID) where USER.EMAIL = ?",[email]);
+            if (typeof rows[0] != "undefined") {
+                let photoarray =  this.generateFileNameList(rows);
+                return photoarray;
+
+            } else {
+                throw new Error("No matching items")
+            }
+        }catch(error){
+            this.iloggerservice.error(error)
+            throw(error);
+        }finally{
+            con.end()
+        }
+    }
+    private generateFileNameList(rows:any){
+        let photoarray:[string]=[""];
+        for(let i = 0;i<rows.length;i++){
+            photoarray.push(String(rows[i].FILENAME)+".jpg")
+        }
+        photoarray.shift()
+        return photoarray
     }
 }

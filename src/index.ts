@@ -4,6 +4,8 @@ import express from "express";
 //controllers
 import { UserController } from "./Controllers/UserController";
 import {PhotoController} from "./Controllers/PhotoController";
+import { PhotographerController } from "./Controllers/PhotographerController";
+import {ClientController} from "./Controllers/ClientController"
 //services
 import {ConsoleLoggerService} from "./Services/Logging/ConsoleLoggerService"
 import { JWTAuthenticationService } from "./Services/Authentication/JWTAuthenticateService";
@@ -11,12 +13,13 @@ import { UserService } from "./Services/Users/UserService";
 import {MailerService} from "./Services/Email/MailerService"
 import { FileService } from "./Services/FileService/FileService";
 import {DummyPhotoService} from "./Services/Photo/DummyPhotoService"
+import { ClientService } from "./Services/Client/ClientService";
 
 //repositories
 import {UserRepository} from "./Repositories/UserRepository";
 import { PhotoRepository } from "./Repositories/PhotoRepository";
-import { PhotographerController } from "./Controllers/PhotographerController";
 import { PhotographerService } from "./Services/Photographer/PhotographerService";
+
 
 const result = dotenv.config();
 
@@ -37,12 +40,14 @@ const IAuthenticationService = new JWTAuthenticationService(IUserService);
 const IFileService = new FileService();
 const IPhotoService = new DummyPhotoService(IFileService,IPhotoRepository);
 const IPhotographerService = new PhotographerService(ILoggerService,IPhotoRepository,IUserRepository)
+const IClientService = new ClientService(ILoggerService,IPhotoRepository,IUserRepository);
 
 
 // controllers
-const userController = new UserController(IUserService, IAuthenticationService);
-const photoController = new PhotoController(IAuthenticationService,IPhotoService);
+const userController = new UserController(ILoggerService,IUserService, IAuthenticationService);
+const photoController = new PhotoController(ILoggerService,IAuthenticationService,IPhotoService);
 const photographerController = new PhotographerController(ILoggerService,IAuthenticationService,IPhotographerService);
+const clientController = new ClientController(ILoggerService,IAuthenticationService,IClientService)
 
 // app setup.
 const app = express();
@@ -75,6 +80,9 @@ app.post("/Photos/Upload",urlencoded, upload.single('avatar'),(req,res)=>photoCo
 //Photographer Control Routes
 app.get("/Photographer/MyPhotos",json,(req,res)=>photographerController.GetUserPhotos(req,res))
 app.post("/Photographer/GrantClientPermissions",json, (req,res)=>photographerController.GrantClientPermission(req,res))
+
+//Client Access Routes
+app.get("/Client/SharedWithMe",json,(req,res)=>clientController.GetAllSharedClientPhotos(req,res))
 
 
 app.listen(80, () =>

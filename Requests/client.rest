@@ -1,4 +1,0 @@
-### see all photos shared with me
-GET http://localhost:80/Client/SharedWithMe
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1leHZhbmNlMDRAZ21haWwuY29tIiwiYXV0aG9yaXphdGlvbiI6ImNsaWVudCIsImlhdCI6MTU4ODg4NjA1MCwiZXhwIjoxNTg4ODg3ODUwfQ.fDU29a6fzsHBwsgWV8ZQFHnibBZRNfREYm-A6_twn4k
-

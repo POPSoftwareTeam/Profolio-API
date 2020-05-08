@@ -3,4 +3,5 @@ import { Gallery } from "../../Models/GalleryModel";
 
 export interface IGalleryService{
     CreateGallery(gallery:Gallery,user:User):Promise<boolean>
+    MyGalleries(user:User):Promise<[string]|null>
 }

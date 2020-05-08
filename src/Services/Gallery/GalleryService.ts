@@ -18,6 +18,10 @@ export class GalleryService implements IGalleryService{
         this.iuserrepository = iuserrepository;
         this.igalleryrepository = igalleryrepository;
     }
+    public async MyGalleries(user: User): Promise<[string]|null> {
+        return await this.igalleryrepository.GetGalleriesByOwnerEmail(user);
+
+    }
     public async CreateGallery(gallery: Gallery,user:User): Promise<boolean> {
         try{
             let DBUser = await this.iuserrepository.GetExistingUser(user);

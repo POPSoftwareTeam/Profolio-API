@@ -36,5 +36,24 @@ export class GalleryRepository implements IGalleryRepository{
             con.end()
         }
     }
+    public async GetGalleriesByOwnerEmail(user: User): Promise<[string]|null> {
+        let con = await this.getConnection()
+        try{
+            let [rows] = await con.execute("select * from GALLERY where OWNER_ID = (select ID from USER where USER.EMAIL = ?)",[user.email])
+            if(rows){
+                let galleryList:[string] = [""]
+                for(let i in rows){
+                    galleryList.push(rows[i].NAME)
+                }
+                galleryList.shift()
+                return galleryList
+            }
+        }catch(error){
+            this.iloggerservice.error(error);
+            return null;
+        }finally{
+            con.end()
+        }
+    }
 
 }

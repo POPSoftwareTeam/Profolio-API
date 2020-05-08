@@ -19,6 +19,11 @@ Content-Type: application/json
     "Permission":"Full_Res"
 }
 
-### getting photos by user email note: you must be logged in as this user
+### see all photos owned by the user on the token
 GET http://localhost:80/Photos/MyPhotos
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imt5bGVyLmRheWJlbGw5NkBnbWFpbC5jb20iLCJhdXRob3JpemF0aW9uIjoicGhvdG9ncmFwaGVyIiwiaWF0IjoxNTg4OTAwNDQ4LCJleHAiOjE1ODg5MDIyNDh9.C52faMfL90RHKns00CKyxr7DKWDYrdqQDdDizxJW8TU
+
+### see all photos shared with the user on the token
+GET http://localhost:80/Client/SharedWithMe
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im1leHZhbmNlMDRAZ21haWwuY29tIiwiYXV0aG9yaXphdGlvbiI6ImNsaWVudCIsImlhdCI6MTU4ODg4NjA1MCwiZXhwIjoxNTg4ODg3ODUwfQ.fDU29a6fzsHBwsgWV8ZQFHnibBZRNfREYm-A6_twn4k
+

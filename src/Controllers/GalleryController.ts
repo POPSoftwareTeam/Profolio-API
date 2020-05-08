@@ -18,7 +18,7 @@ export class GalleryController{
     }
 
     public async CreateGallery(req:Request,res:Response){
-        this.iloggerservice.log("IP:"+req.connection.remoteAddress+" Controller: Photographer Function: CreateGallery Time:"+Date.now());
+        this.iloggerservice.log("IP:"+req.connection.remoteAddress+" Controller: Gallery Function: CreateGallery Time:"+Date.now());
         let user:User = await  this.iauthenticationservice.AuthenticateToken(req,res);
         let gallery = new Gallery(0,req.body.Gallery.Name,req.body.Gallery.Description);
         for(let i in req.body.Gallery.Photos){
@@ -34,6 +34,21 @@ export class GalleryController{
                 res.end();
             }
             
+        }
+    }
+
+    public async GetMyGalleries(req:Request,res:Response){
+        this.iloggerservice.log("IP:"+req.connection.remoteAddress+" Controller: Gallery Function: GetMyGalleries Time:"+Date.now());
+        let user:User = await  this.iauthenticationservice.AuthenticateToken(req,res);
+        if(user){
+            let result = await this.igalleryservice.MyGalleries(user);
+            if(result){
+                res.write(JSON.stringify({Status: "success", Data: result}));
+                res.end();
+            }else{
+                res.write(JSON.stringify({Status: "failure", Message: "failed to get galleries for this user"}));
+                res.end();
+            }
         }
     }
 }

@@ -10,3 +10,7 @@ Content-Type: application/json
         "Photos":["3e672ef0-90c8-11ea-9762-273b139a8094.jpg","57786b70-90c8-11ea-9762-273b139a8094.jpg"]
     }
 }
+
+### Get all galleries that you own
+GET http://localhost:80/Gallery/MyGalleries
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imt5bGVyLmRheWJlbGw5NkBnbWFpbC5jb20iLCJhdXRob3JpemF0aW9uIjoicGhvdG9ncmFwaGVyIiwiaWF0IjoxNTg4OTA4MzM0LCJleHAiOjE1ODg5MTAxMzR9.g8PRtFKBCr3gOsG4cyp4Nc_AHxpUynj1rhdE-TT2uPo

@@ -15,7 +15,7 @@ Content-Type: application/json
 
 {	
     "User":{
-		"email":"relyk.photography.kyler@gmail.com",
+		"email":"kyler.daybell96@gmail.com",
 		"password":"kyler",
 		"authorization":"user"
 	}
@@ -28,7 +28,7 @@ Content-Type: application/json
 
 {	
     "User":{
-		"email":"email@gmail.com"
+		"email":"@gmail.com"
 	}
 }
 

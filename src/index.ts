@@ -19,7 +19,7 @@ import { ClientService } from "./Services/Client/ClientService";
 import {UserRepository} from "./Repositories/UserRepository";
 import { PhotoRepository } from "./Repositories/PhotoRepository";
 import { PhotographerService } from "./Services/Photographer/PhotographerService";
-
+import {GalleryRepository} from "./Repositories/GalleryRepository";
 
 const result = dotenv.config();
 
@@ -32,6 +32,7 @@ const ILoggerService = new ConsoleLoggerService()
 // repositorys
 const IUserRepository = new UserRepository(ILoggerService);
 const IPhotoRepository = new PhotoRepository(ILoggerService);
+const IGalleryRepository = new GalleryRepository(ILoggerService)
 
 // services
 const IMailerService = new MailerService()
@@ -39,7 +40,7 @@ const IUserService = new UserService(IUserRepository,IMailerService);
 const IAuthenticationService = new JWTAuthenticationService(IUserService);
 const IFileService = new FileService();
 const IPhotoService = new DummyPhotoService(IFileService,IPhotoRepository);
-const IPhotographerService = new PhotographerService(ILoggerService,IPhotoRepository,IUserRepository)
+const IPhotographerService = new PhotographerService(ILoggerService,IPhotoRepository,IUserRepository,IGalleryRepository)
 const IClientService = new ClientService(ILoggerService,IPhotoRepository,IUserRepository);
 
 
@@ -81,9 +82,11 @@ app.get("/Photos/Delete/:PhotoID",json,(req,res)=>photoController.DeletePhoto(re
 //Photographer Control Routes
 app.get("/Photographer/MyPhotos",json,(req,res)=>photographerController.GetUserPhotos(req,res))
 app.post("/Photographer/GrantClientPermissions",json, (req,res)=>photographerController.GrantClientPermission(req,res))
+app.post("/Photographer/CreateGallery",json,(req,res)=>photographerController.CreateGallery(req,res))
 
 //Client Access Routes
 app.get("/Client/SharedWithMe",json,(req,res)=>clientController.GetAllSharedClientPhotos(req,res))
+
 
 
 app.listen(80, () =>

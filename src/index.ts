@@ -76,6 +76,7 @@ app.get("/Photos/LowRes/:PhotoID",json,(req,res)=>photoController.GetLowResPhoto
 
 //Uploading image
 app.post("/Photos/Upload",urlencoded, upload.single('avatar'),(req,res)=>photoController.UploadPhoto(req,res))
+app.get("/Photos/Delete/:PhotoID",json,(req,res)=>photoController.DeletePhoto(req,res))
 
 //Photographer Control Routes
 app.get("/Photographer/MyPhotos",json,(req,res)=>photographerController.GetUserPhotos(req,res))

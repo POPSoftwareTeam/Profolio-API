@@ -40,6 +40,16 @@ export class DummyPhotoService implements IPhotoService{
         }
         
     }
+    public async DeletePhoto(user: User, photoID: string): Promise<boolean> {
+        let guid = photoID.split(".")[0]
+        let DBUserEmail = await this.iphotorepository.GetOwnerEmailByPhoto(guid)
+        if(user.email == DBUserEmail){
+            await this.iphotorepository.DeletePhoto(guid);
+            this.ifileservice.DeleteImage(photoID);
+        }else{
+            return false
+        }
+    }
 
     private async UserHasPhotoAccess(photoID:string,email:string):Promise<"Low_Res"|"Full_Res"|"No_Access">{
         let guid = photoID.split(".")[0]

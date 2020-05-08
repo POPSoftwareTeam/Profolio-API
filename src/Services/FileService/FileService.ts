@@ -4,7 +4,6 @@ const fs = require('fs');
 
 
 export class FileService implements IFileService{
-
     public async CreateImage(photo:any,guid:string):Promise<boolean>{
         try{
             await this.CreateFullResImage(photo,guid);
@@ -15,11 +14,11 @@ export class FileService implements IFileService{
         }
     }
 
-    async CreateFullResImage(photo: any,guid:string) {
+    private async CreateFullResImage(photo: any,guid:string) {
         await fs.writeFileSync("./photo-storage/fullres/"+guid+".jpg",photo,'binary')
     }
 
-    async CreateLowResImage(guid: string) {
+    private async CreateLowResImage(guid: string) {
         const image = await Jimp.read('./photo-storage/fullres/'+guid+".jpg");
         await image.resize(800, Jimp.AUTO);
         await image.quality(90);
@@ -34,6 +33,16 @@ export class FileService implements IFileService{
     public GetLowResImage(photoID: string) {
         let photo = fs.readFileSync('./photo-storage/lowres/'+photoID)
         return photo
+    }
+
+    public DeleteImage(photoID: string): boolean {
+        try{
+            fs.unlinkSync('./photo-storage/lowres/'+photoID)
+            fs.unlinkSync('./photo-storage/fullres/'+photoID)
+            return true
+        }catch(error){
+            return false
+        }
     }
 
 }

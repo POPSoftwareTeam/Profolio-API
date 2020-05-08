@@ -22,6 +22,13 @@ export class PhotographerController{
         let permission = req.body.Permission;
         if(user && clientEmail && photoID && permission){
             let result = await this.iphotographerservice.GrantClientPermissions(clientEmail,photoID,permission,user)
+            if(result){
+                res.write(JSON.stringify({Status: "success", Message: "The client now has permission to view the photo"}));
+                res.end();
+            }else{
+                res.write(JSON.stringify({Status: "failure", Message: "failed to add permissions"}));
+                res.end();
+            }
 
         }
     }

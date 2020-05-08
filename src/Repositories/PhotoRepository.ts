@@ -57,7 +57,7 @@ export class PhotoRepository implements IPhotoRepository{
         let con = await this.getConnection();
         try {
             const [rows] = await con.execute("SELECT USER.EMAIL from USER inner join PHOTO on (PHOTO.OWNER_ID = USER.ID) WHERE PHOTO.FILENAME=?", [guid]);
-            if(rows[0]["EMAIL"]){
+            if(rows[0] && rows[0]["EMAIL"]){
                 return rows[0]["EMAIL"]
             }else{
                 throw("user does not exist")
@@ -133,6 +133,19 @@ export class PhotoRepository implements IPhotoRepository{
             return("No_Access")
         }finally{
             con.end()
+        }
+    }
+    public async DeletePhoto(guid: string): Promise<Boolean> {
+        let con = await this.getConnection();
+        try {
+            let photoID = await this.GetPhotoIDByFILENAME(guid);
+            const [rows] = await con.execute("Delete from PHOTO where FILENAME = ?", [guid]);
+            return true
+        }catch(error){
+            this.iloggerservice.error(error);
+            return false;
+        }finally {
+            con.end();
         }
     }
     private generateFileNameList(rows:any){

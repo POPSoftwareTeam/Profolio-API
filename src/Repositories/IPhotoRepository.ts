@@ -8,4 +8,5 @@ export interface IPhotoRepository{
     GetPhotoIDByFILENAME(guid:string):Promise<string>
     GetAllPhotosSharedWithClient(email:string):Promise<[string]>
     IsPhotoSharedWithClient(guid: string, email:string):Promise<"Low_Res"|"Full_Res"|"No_Access">
+    DeletePhoto(guid:string):Promise<Boolean>
 }

@@ -16,7 +16,7 @@ export class ClientService implements IClientService{
     }
     public async getAllPhotosSharedWithClient(user:User): Promise<[string]> {
         try{
-            return await this.iphotorepository.getAllPhotosSharedWithClient(user.email)
+            return await this.iphotorepository.GetAllPhotosSharedWithClient(user.email)
         }catch(error){
             this.iloggerservice.error("Service: ClientService, Function:GetPhotosSharedWithClientByEmail, Error:"+error)
             return [""]

@@ -22,7 +22,9 @@ export class PhotographerService implements IPhotographerService{
             let DBClientUser = await this.iuserrepository.GetExistingUser(clientUser);
             if(DBClientUser.authorization != "unverified"){
                 let result = await this.iphotorepository.AddViewingPermissions(DBClientUser.id,guid,permission);
-                return true;
+                if(result){
+                    return true;
+                }
             }
 
         }

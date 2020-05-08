@@ -1,11 +1,11 @@
 ### Adding a client to the viewers table so that they can access a photo
 POST http://localhost:80/Photographer/GrantClientPermissions
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imt5bGVyLmRheWJlbGw5NkBnbWFpbC5jb20iLCJhdXRob3JpemF0aW9uIjoiY2xpZW50IiwiaWF0IjoxNTg4ODE3OTExLCJleHAiOjE1ODg4MTk3MTF9.Iau9LrPh0bPMhgm1pFULgVqnuxiId3eyBcjATv4prsg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imt5bGVyLmRheWJlbGw5NkBnbWFpbC5jb20iLCJhdXRob3JpemF0aW9uIjoicGhvdG9ncmFwaGVyIiwiaWF0IjoxNTg4ODk1NTc3LCJleHAiOjE1ODg4OTczNzd9.ZLqcZzPnhpXAiLpUmFTyUQB5eyzSfZi-bdzZ_HQbnjA
 Content-Type: application/json
 
 {	
-	"Email":"mexvance04@gmail.com",
-    "Photo":"81f45400-9009-11ea-b24d-e7a058bc4d00.jpg",
+	"Email":"relyk.photography.kyler@gmail.com",
+    "Photo":"be5d84c0-90bd-11ea-a286-7b716fddf4cc.jpg",
     "Permission":"Full_Res"
 }
 

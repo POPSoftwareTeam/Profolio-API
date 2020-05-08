@@ -11,6 +11,7 @@ export class UserService implements IUserService {
         this.iuserrepository = iuserrepository;
         this.imailservice = imailservice;
     }
+    //comment
     public async VerifyEmail(guid: string): Promise<boolean> {
         try{
             return await this.iuserrepository.VerifyEmail(guid,"client");

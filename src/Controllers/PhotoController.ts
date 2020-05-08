@@ -44,6 +44,46 @@ export class PhotoController{
         
     }
 
+    public async GrantClientPermission(req:Request,res:Response){
+        this.iloggerservice.log("IP:"+req.connection.remoteAddress+" Controller: Photographer Function: GrantClientPermission Time:"+Date.now());
+        let user:User = await  this.iauthenticationservice.AuthenticateToken(req,res);
+        let clientEmail = req.body.Email;
+        let photoID = req.body.Photo;
+        let permission = req.body.Permission;
+        if(user && clientEmail && photoID && permission){
+            let result = await this.iphotoservice.GrantClientPermissions(clientEmail,photoID,permission,user)
+            if(result){
+                res.write(JSON.stringify({Status: "success", Message: "The client now has permission to view the photo"}));
+                res.end();
+            }else{
+                res.write(JSON.stringify({Status: "failure", Message: "failed to add permissions"}));
+                res.end();
+            }
+
+        }
+    }
+
+    public async GetAllSharedClientPhotos(req:Request,res:Response){
+        this.iloggerservice.log("IP:"+req.connection.remoteAddress+" Controller: Client Function: GetAllSharedClientPhotos Time:"+Date.now());
+        let user:User = await  this.iauthenticationservice.AuthenticateToken(req,res);
+        if(user){
+            let photos = await this.iphotoservice.getAllPhotosSharedWithClient(user);
+            res.write(JSON.stringify({Status: "success", Data: photos}));
+            res.end();
+        }
+    }
+
+
+    public async GetUserPhotos(req:Request,res:Response){
+        this.iloggerservice.log("IP:"+req.connection.remoteAddress+" Controller: Photographer Function: GetUserPhotos Time:"+Date.now());
+        let user:User = await  this.iauthenticationservice.AuthenticateToken(req,res);
+        if(user){
+            let photos = await this.iphotoservice.GetUserPhotos(user)
+            res.write(JSON.stringify({Status: "success", Data: photos}));
+            res.end();
+        }
+    }
+
     public async UploadPhoto(req:any,res:Response){
         this.iloggerservice.log("IP:"+req.connection.remoteAddress+" Controller: Photo Function: UploadPhoto Time:"+Date.now());
         let user:User = await  this.iauthenticationservice.AuthenticateToken(req,res);

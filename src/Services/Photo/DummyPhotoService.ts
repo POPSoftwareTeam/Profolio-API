@@ -3,14 +3,20 @@ import { IFileService } from "../FileService/IFileService";
 import { User } from "../../Models/UserModel";
 import { v1 as uuidv1 } from 'uuid';
 import { IPhotoRepository } from "../../Repositories/IPhotoRepository";
+import { IUserRepository } from "../../Repositories/IUserRepository";
+import { ILoggerService } from "../Logging/ILoggerService";
 
 
 export class DummyPhotoService implements IPhotoService{
-    readonly ifileservice:IFileService;
-    readonly iphotorepository: IPhotoRepository;
-    constructor(ifileservice:IFileService,iphotorepository:IPhotoRepository){
+    private readonly ifileservice:IFileService;
+    private readonly iphotorepository: IPhotoRepository;
+    private readonly iuserrepository:IUserRepository;
+    private readonly iloggerservice:ILoggerService
+    constructor(iloggerservice:ILoggerService,ifileservice:IFileService,iphotorepository:IPhotoRepository,iuserrepository:IUserRepository){
         this.ifileservice = ifileservice
         this.iphotorepository = iphotorepository;
+        this.iuserrepository = iuserrepository;
+        this.iloggerservice = iloggerservice;
     }
     public async GetLowResPhoto(photoID: string, user: User) {
         let permission = await this.UserHasPhotoAccess(photoID,user.email);
@@ -51,6 +57,38 @@ export class DummyPhotoService implements IPhotoService{
         }
     }
 
+    public async GrantClientPermissions(clientEmail: string, photoID: string,permission:string, owner: User): Promise<boolean> {
+        let guid = photoID.split(".")[0]
+        let DBOwnwerEmail = await this.iphotorepository.GetOwnerEmailByPhoto(guid)
+        if(DBOwnwerEmail == owner.email){
+            let clientUser = new User(0,clientEmail,"","unverified");
+            let DBClientUser = await this.iuserrepository.GetExistingUser(clientUser);
+            if(DBClientUser.authorization != "unverified"){
+                let result = await this.iphotorepository.AddViewingPermissions(DBClientUser.id,guid,permission);
+                if(result){
+                    return true;
+                }
+            }
+
+        }
+
+        return false;
+    }
+
+    public async GetUserPhotos(user: User): Promise<[string]> {
+        return await this.iphotorepository.GetPhotosByUser(user);
+    }
+
+    public async getAllPhotosSharedWithClient(user:User): Promise<[string]> {
+        try{
+            return await this.iphotorepository.GetAllPhotosSharedWithClient(user.email)
+        }catch(error){
+            this.iloggerservice.error("Service: ClientService, Function:GetPhotosSharedWithClientByEmail, Error:"+error)
+            return [""]
+        }
+    }
+
+
     private async UserHasPhotoAccess(photoID:string,email:string):Promise<"Low_Res"|"Full_Res"|"No_Access">{
         let guid = photoID.split(".")[0]
         let DBUserEmail = await this.iphotorepository.GetOwnerEmailByPhoto(guid)
@@ -63,5 +101,7 @@ export class DummyPhotoService implements IPhotoService{
             return Shared;
         }
     }
+
+
 
 }

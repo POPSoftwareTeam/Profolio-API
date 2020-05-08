@@ -13,15 +13,4 @@ Content-Type: application/json
 GET http://localhost:80/Photographer/MyPhotos
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imt5bGVyLmRheWJlbGw5NkBnbWFpbC5jb20iLCJhdXRob3JpemF0aW9uIjoicGhvdG9ncmFwaGVyIiwiaWF0IjoxNTg4OTAwNDQ4LCJleHAiOjE1ODg5MDIyNDh9.C52faMfL90RHKns00CKyxr7DKWDYrdqQDdDizxJW8TU
 
-### getting photos by user email note: you must be logged in as this user
-POST  http://localhost:80/Photographer/CreateGallery
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imt5bGVyLmRheWJlbGw5NkBnbWFpbC5jb20iLCJhdXRob3JpemF0aW9uIjoicGhvdG9ncmFwaGVyIiwiaWF0IjoxNTg4OTAzNTYzLCJleHAiOjE1ODg5MDUzNjN9.aQOUh4a-NdYRA3W9f96pvoBNjhJ8xR1wlSIBt78byKk
-Content-Type: application/json
 
-{
-    "Gallery":{
-        "Name":"bob ross photos 3",
-        "Description":"A gallery of bob ross paintings",
-        "Photos":["3e672ef0-90c8-11ea-9762-273b139a8094.jpg","57786b70-90c8-11ea-9762-273b139a8094.jpg"]
-    }
-}

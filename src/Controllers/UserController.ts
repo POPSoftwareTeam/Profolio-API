@@ -13,9 +13,8 @@ export class UserController {
         this.iauthenticationservice = iauthenticationservice;
         this.iloggerservice=iloggerservice
     }
-    public async PostClientRegister(req: Request, res: Response): Promise<void> {
+    public async PostRegister(req: Request, res: Response): Promise<void> {
         this.iloggerservice.log("IP:"+req.connection.remoteAddress+" Controller: User Function: PostClientRegister Time:"+Date.now());
-        console.log("in the register client")
         const user = new User(null, req.body.User.email, req.body.User.password, "unverified");
         if (await this.iuserservice.CreateUser(user,"client")) {
             res.write(JSON.stringify({Status: "success", Message: "The client was successfuly added to the database"}));
@@ -27,19 +26,7 @@ export class UserController {
             return;
         }
     }
-    public async PostPhotographerRegister(req: Request, res: Response): Promise<void> {
-        this.iloggerservice.log("IP:"+req.connection.remoteAddress+" Controller: User Function: PostPhotographerRegister Time:"+Date.now());
-        const user = new User(null, req.body.User.email, req.body.User.password, "unverified");
-        if (await this.iuserservice.CreateUser(user,"photographer")) {
-            res.write(JSON.stringify({Status: "success", Message: "The photographer was successfuly added to the database"}));
-            res.end();
-            return;
-        } else {
-            res.write(JSON.stringify({Status: "failure", Message: "Failed to add the photographer to the database"}));
-            res.end();
-            return;
-        }
-    }
+    
     public async PostLogin(req: Request, res: Response): Promise<void> {
         this.iloggerservice.log("IP:"+req.connection.remoteAddress+" Controller: User Function: PostLogin Time:"+Date.now());
         await this.iauthenticationservice.AuthenticateUser(req, res);
@@ -73,30 +60,16 @@ export class UserController {
 
     }
 
-    public async VerifyClientEmail(req:Request,res:Response): Promise<void>{
+    public async VerifyEmail(req:Request,res:Response): Promise<void>{
         this.iloggerservice.log("IP:"+req.connection.remoteAddress+" Controller: User Function: VerifyClientEmail Time:"+Date.now());
 
         const guid = req.params.guid;
-        if (await this.iuserservice.VerifyClientEmail(guid)) {
+        if (await this.iuserservice.VerifyEmail(guid)) {
             res.write(JSON.stringify({Status: "success", Message: "The client email was verified"}));
             res.end();
             return;
         } else {
             res.write(JSON.stringify({Status: "failure", Message: "The client email was not verified"}));
-            res.end();
-            return;
-        }
-    }
-
-    public async VerifyPhotographerEmail(req:Request,res:Response): Promise<void>{
-        this.iloggerservice.log("IP:"+req.connection.remoteAddress+" Controller: User Function: VerifyPhotographerEmail Time:"+Date.now());
-        const guid = req.params.guid;
-        if (await this.iuserservice.VerifyPhotographerEmail(guid)) {
-            res.write(JSON.stringify({Status: "success", Message: "The photographer email was verified"}));
-            res.end();
-            return;
-        } else {
-            res.write(JSON.stringify({Status: "failure", Message: "The photographer email was not verified"}));
             res.end();
             return;
         }

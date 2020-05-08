@@ -62,12 +62,11 @@ app.use(cors());
 
 //User Routes
 app.get("/", json,(req, res) => userController.GetRoot(req, res));
-app.post("/Register/Client", json,(req, res) => userController.PostClientRegister(req, res));
-app.post("/Register/Photographer", json,(req, res) => userController.PostPhotographerRegister(req, res));
+app.post("/Register", json,(req, res) => userController.PostRegister(req, res));
 app.post("/Login", json,(req, res) => userController.PostLogin(req, res));
 app.post("/DeleteAccount",json, (req, res) => userController.PostDeleteUser(req, res));
-app.get("/Verify/ClientEmail/:guid",(req,res)=>userController.VerifyClientEmail(req,res));
-app.get("/Verify/PhotographerEmail/:guid",(req,res)=>userController.VerifyPhotographerEmail(req,res));
+app.get("/Verify/:guid",(req,res)=>userController.VerifyEmail(req,res));
+
 
 //Photos
 app.post("/Photos/Upload",urlencoded, upload.single('avatar'),(req,res)=>photoController.UploadPhoto(req,res))

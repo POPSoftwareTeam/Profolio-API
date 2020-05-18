@@ -51,6 +51,7 @@ export class PhotoController{
         let photoID = req.body.Photo;
         let permission = req.body.Permission;
         if(user && clientEmail && photoID && permission){
+            console.log("in the permissions")
             let result = await this.iphotoservice.GrantClientPermissions(clientEmail,photoID,permission,user)
             if(result){
                 res.write(JSON.stringify({Status: "success", Message: "The client now has permission to view the photo"}));

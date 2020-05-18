@@ -10,18 +10,18 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imt5bGVyL
 
 ### Adding a client to the viewers table so that they can access a photo
 POST http://localhost:80/Photos/GrantClientPermissions
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imt5bGVyLmRheWJlbGw5NkBnbWFpbC5jb20iLCJhdXRob3JpemF0aW9uIjoicGhvdG9ncmFwaGVyIiwiaWF0IjoxNTg4ODk1NTc3LCJleHAiOjE1ODg4OTczNzd9.ZLqcZzPnhpXAiLpUmFTyUQB5eyzSfZi-bdzZ_HQbnjA
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJlbHlrLnBob3RvZ3JhcGh5Lmt5bGVyQGdtYWlsLmNvbSIsImF1dGhvcml6YXRpb24iOiJjbGllbnQiLCJpYXQiOjE1ODk3NDc4ODYsImV4cCI6MTU4OTc0OTY4Nn0.vjVdfC3ikGnl6WBEQoZlRh5_CObzmW3axGt47h4kdUo
 Content-Type: application/json
 
 {	
-	"Email":"relyk.photography.kyler@gmail.com",
-    "Photo":"be5d84c0-90bd-11ea-a286-7b716fddf4cc.jpg",
-    "Permission":"Full_Res"
+	"Email":"aquanariki@gmail.com",
+    "Photo":"5715c020-986a-11ea-95da-1954bb6072b2.jpg",
+    "Permission":"Low_Res"
 }
 
 ### see all photos owned by the user on the token
 GET http://localhost:80/Photos/MyPhotos
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imt5bGVyLmRheWJlbGw5NkBnbWFpbC5jb20iLCJhdXRob3JpemF0aW9uIjoicGhvdG9ncmFwaGVyIiwiaWF0IjoxNTg4OTAwNDQ4LCJleHAiOjE1ODg5MDIyNDh9.C52faMfL90RHKns00CKyxr7DKWDYrdqQDdDizxJW8TU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJlbHlrLnBob3RvZ3JhcGh5Lmt5bGVyQGdtYWlsLmNvbSIsImF1dGhvcml6YXRpb24iOiJjbGllbnQiLCJpYXQiOjE1ODk3NDc4ODYsImV4cCI6MTU4OTc0OTY4Nn0.vjVdfC3ikGnl6WBEQoZlRh5_CObzmW3axGt47h4kdUo
 
 ### see all photos shared with the user on the token
 GET http://localhost:80/Client/SharedWithMe

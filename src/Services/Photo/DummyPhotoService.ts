@@ -57,7 +57,7 @@ export class DummyPhotoService implements IPhotoService{
         }
     }
 
-    public async GrantClientPermissions(clientEmail: string, photoID: string,permission:string, owner: User): Promise<boolean> {
+    public async GrantClientPermissions(clientEmail: string, photoID: string,permission:"Full_Res"|"Low_Res", owner: User): Promise<boolean> {
         let guid = photoID.split(".")[0]
         let DBOwnwerEmail = await this.iphotorepository.GetOwnerEmailByPhoto(guid)
         if(DBOwnwerEmail == owner.email){

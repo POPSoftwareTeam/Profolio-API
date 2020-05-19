@@ -49,7 +49,7 @@ export class PhotoController{
         let user:User = await  this.iauthenticationservice.AuthenticateToken(req,res);
         let clientEmail = req.body.Email;
         let photoID = req.body.Photo;
-        let permission = req.body.Permission;
+        let permission:"Full_Res"|"Low_Res" = req.body.Permission;
         if(user && clientEmail && photoID && permission){
             console.log("in the permissions")
             let result = await this.iphotoservice.GrantClientPermissions(clientEmail,photoID,permission,user)

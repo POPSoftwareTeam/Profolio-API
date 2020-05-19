@@ -5,11 +5,13 @@ const fs = require('fs');
 
 export class FileService implements IFileService{
     public async CreateImage(photo:any,guid:string):Promise<boolean>{
+        const lowressize = parseInt(process.env.LOW_RES_IMAGE_SIZE);
+        const lowresquality = parseInt(process.env.LOW_RES_IMAGE_QUALITY);
         try{
             console.log("creating full res image")
             await this.CreateFullResImage(photo,guid);
             console.log("low res now")
-            await this.CreateLowResImage(guid);
+            await this.CreateLowResImage(guid,lowressize,lowresquality);
             return true
         }catch(error){
             console.log(error)
@@ -18,17 +20,23 @@ export class FileService implements IFileService{
     }
 
     private async CreateFullResImage(photo: any,guid:string) {
-        await fs.writeFileSync("./photo-storage/fullres/"+guid+".jpg",photo,'binary')
+        try{
+            await fs.writeFileSync("./photo-storage/fullres/"+guid+".jpg",photo,'binary')
+        }catch(error){
+            throw error
+        }
     }
 
-    private async CreateLowResImage(guid: string) {
+    private async CreateLowResImage(guid: string,size:number,quality:number) {
         try{
+        console.log(size)
+        console.log(quality)
         const image = await Jimp.read('./photo-storage/fullres/'+guid+".jpg");
-        await image.resize(800, Jimp.AUTO);
-        await image.quality(90);
+        await image.resize(size, Jimp.AUTO);
+        await image.quality(quality);
         await image.writeAsync('./photo-storage/lowres/'+guid+".jpg");
         }catch(error){
-            console.log(error)
+            throw error
         }
     }
 

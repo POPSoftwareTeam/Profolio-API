@@ -92,7 +92,8 @@ export class PhotoController{
             try{
                 let buffer = req.file.buffer
                 const data = new Uint8Array(buffer)
-                await this.iphotoservice.UploadPhoto(data,user)
+                let result = await this.iphotoservice.UploadPhoto(data,user)
+                if(!result){throw new Error("Upload failed")}
                 res.write(JSON.stringify({Status: "success",Message:"the photo was successfully uploaded"}));
                 res.end();
             }catch(e){
@@ -103,7 +104,7 @@ export class PhotoController{
         }
     }
     public async DeletePhoto(req:Request,res:Response){
-        this.iloggerservice.log("IP:"+req.connection.remoteAddress+" Controller: Photo Function: UploadPhoto Time:"+Date.now());
+        this.iloggerservice.log("IP:"+req.connection.remoteAddress+" Controller: Photo Function: DeletePhoto Time:"+Date.now());
         let user:User = await  this.iauthenticationservice.AuthenticateToken(req,res);
         let photoID = req.params.PhotoID
         if(user && photoID){
@@ -112,7 +113,22 @@ export class PhotoController{
                 res.write(JSON.stringify({Status: "success",Message:"the photo was successfully deleted"}));
                 res.end();
             }else{
-                res.write(JSON.stringify({Status: "failure",Message:"the photo was not"}));
+                res.write(JSON.stringify({Status: "failure",Message:"the photo was not deleted"}));
+                res.end();
+            }
+        }
+    }
+
+    public async GetAvailablePhotos(req:Request,res:Response){
+        this.iloggerservice.log("IP:"+req.connection.remoteAddress+" Controller: Photo Function: DeletePhoto Time:"+Date.now());
+        let user:User = await  this.iauthenticationservice.AuthenticateToken(req,res);
+        if(user){
+            try{
+            let photoCount = await this.iphotoservice.GetUserAvailablePhotoCount(user);
+            res.write(JSON.stringify({Status: "success",Data:photoCount}));
+            res.end();
+            }catch(error){
+                res.write(JSON.stringify({Status: "failure",Message:"the photo was not deleted"}));
                 res.end();
             }
         }

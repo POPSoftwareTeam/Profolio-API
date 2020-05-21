@@ -8,4 +8,5 @@ export interface IPhotoService{
     GrantClientPermissions(clientEmail:string,photoID:string,permission:string,owner:User):Promise<boolean>
     GetUserPhotos(user: User): Promise<[string]>
     getAllPhotosSharedWithClient(user:User):Promise<[string]>
+    GetUserAvailablePhotoCount(user:User):Promise<number>
 }

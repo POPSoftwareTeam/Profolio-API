@@ -38,8 +38,15 @@ export class DummyPhotoService implements IPhotoService{
     public async UploadPhoto(photo: any, user: User) {
         try{
             const guid = uuidv1()
-            await this.ifileservice.CreateImage(photo,guid);
-            await this.iphotorepository.CreatePhoto("asdf",guid,user);
+            let avaliblePhotos = await this.iuserrepository.GetAvailablePhotos(user.email)
+            console.log(avaliblePhotos)
+            if(avaliblePhotos > 0){
+                await this.iphotorepository.CreatePhoto("asdf",guid,user);
+                await this.ifileservice.CreateImage(photo,guid);
+                await this.iuserrepository.IncrementPhotoCount(user.email)
+            }else{
+                throw new Error("Not enough uploads left")
+            }
             return true;
         }catch(e){
             return false
@@ -51,7 +58,8 @@ export class DummyPhotoService implements IPhotoService{
         let DBUserEmail = await this.iphotorepository.GetOwnerEmailByPhoto(guid)
         if(user.email == DBUserEmail){
             await this.iphotorepository.DeletePhoto(guid);
-            this.ifileservice.DeleteImage(photoID);
+            await this.ifileservice.DeleteImage(photoID);
+            await this.iuserrepository.DecrementPhotoCount(user.email)
         }else{
             return false
         }
@@ -88,6 +96,9 @@ export class DummyPhotoService implements IPhotoService{
         }
     }
 
+    public async GetUserAvailablePhotoCount(user:User):Promise<number>{
+        return await this.iuserrepository.GetAvailablePhotos(user.email)
+    }
 
     private async UserHasPhotoAccess(photoID:string,email:string):Promise<"Low_Res"|"Full_Res"|"No_Access">{
         let guid = photoID.split(".")[0]
@@ -101,6 +112,7 @@ export class DummyPhotoService implements IPhotoService{
             return Shared;
         }
     }
+
 
 
 

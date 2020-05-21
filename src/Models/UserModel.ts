@@ -4,8 +4,8 @@ export class User {
     public readonly id: number|null;
     public readonly email: string;
     public readonly password: string;
-    public readonly authorization: "unverified"|"client"|"photographer"|"admin";
-    public constructor(id: number|null, email: string, password: string, authorization: "unverified"|"client"|"photographer"|"admin") {
+    public readonly authorization: "unverified"|"free"|"pro"|"expert";
+    public constructor(id: number|null, email: string, password: string, authorization: "unverified"|"free"|"pro"|"expert") {
         this.id = id;
         this.email = email;
         this.password = password;

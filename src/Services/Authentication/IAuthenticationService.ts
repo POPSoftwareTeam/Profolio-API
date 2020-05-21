@@ -7,5 +7,5 @@ export interface IAuthenticationService {
     // validates the token that a user is using
     AuthenticateToken(req: Request, res: Response): Promise<User|null>;
     // validates the token and insures that the authorization level of the user is correct.
-    AuthorizeToken(req: Request, res: Response, authorizationLevel: "none"|"user"|"admin" ): Promise<User|null>;
+    AuthorizeToken(req: Request, res: Response, authorizationLevel: "unverified"|"free"|"pro"|"expert" ): Promise<User|null>;
 }

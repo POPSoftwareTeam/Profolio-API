@@ -76,6 +76,7 @@ app.get("/Photos/LowRes/:PhotoID",json,(req,res)=>photoController.GetLowResPhoto
 app.get("/Photos/Delete/:PhotoID",json,(req,res)=>photoController.DeletePhoto(req,res))
 app.get("/Photos/MyPhotos",json,(req,res)=>photoController.GetUserPhotos(req,res))
 app.get("/Photos/SharedWithMe",json,(req,res)=>photoController.GetAllSharedClientPhotos(req,res))
+app.get("/Photos/GetUploadsLeft",json,(req,res)=>photoController.GetAvailablePhotos(req,res))
 
 //GalleryController
 app.post("/Gallery/Create",json,(req,res)=>galleryController.CreateGallery(req,res))

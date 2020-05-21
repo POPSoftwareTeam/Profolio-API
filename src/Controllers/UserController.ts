@@ -51,7 +51,7 @@ export class UserController {
 
     public async GetRoot(req: Request, res: Response): Promise<void> {
         this.iloggerservice.log("IP:"+req.connection.remoteAddress+" Controller: User Function: GetRoot Time:"+Date.now());
-        const user = await this.iauthenticationservice.AuthorizeToken(req, res, "user");
+        const user = await this.iauthenticationservice.AuthorizeToken(req, res, "free");
         if (user) {
             const response: string = JSON.stringify({Status: "success", Message: "You are authorized"});
             res.write(response);

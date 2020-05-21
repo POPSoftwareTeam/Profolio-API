@@ -8,9 +8,7 @@ export class FileService implements IFileService{
         const lowressize = parseInt(process.env.LOW_RES_IMAGE_SIZE);
         const lowresquality = parseInt(process.env.LOW_RES_IMAGE_QUALITY);
         try{
-            console.log("creating full res image")
             await this.CreateFullResImage(photo,guid);
-            console.log("low res now")
             await this.CreateLowResImage(guid,lowressize,lowresquality);
             return true
         }catch(error){
@@ -29,8 +27,6 @@ export class FileService implements IFileService{
 
     private async CreateLowResImage(guid: string,size:number,quality:number) {
         try{
-        console.log(size)
-        console.log(quality)
         const image = await Jimp.read('./photo-storage/fullres/'+guid+".jpg");
         await image.resize(size, Jimp.AUTO);
         await image.quality(quality);

@@ -23,8 +23,8 @@ export class DummyUserService implements IUserService {
         }
     }
     ValidateUser(user: User): Promise<User> {
-        if (user.email == "kyler.daybell@gmail.com" && user.password == "kyler" && user.authorization == "admin") {
-            return Promise.resolve(new User(0,"kyler.daybell@gmail.com","kyler","admin"));
+        if (user.email == "kyler.daybell@gmail.com" && user.password == "kyler" && user.authorization == "free") {
+            return Promise.resolve(new User(0,"kyler.daybell@gmail.com","kyler","free"));
         }
     }
     public async RemoveUser(user: User): Promise<boolean> {

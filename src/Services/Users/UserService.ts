@@ -14,7 +14,7 @@ export class UserService implements IUserService {
     //comment
     public async VerifyEmail(guid: string): Promise<boolean> {
         try{
-            return await this.iuserrepository.VerifyEmail(guid,"client");
+            return await this.iuserrepository.VerifyEmail(guid,"free");
         }catch(e){
             return false
         }
